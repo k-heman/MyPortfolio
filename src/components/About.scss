@@ -1,0 +1,100 @@
+.about {
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  &__location {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--fs-body-sm);
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    padding: 4px 12px;
+    background: color-mix(in oklab, var(--bg-tertiary) 50%, transparent);
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-color);
+  }
+
+  &__bio {
+    font-size: var(--fs-body);
+    color: var(--text-secondary);
+    line-height: var(--lh-loose);
+
+    p {
+      margin-bottom: 16px;
+    }
+
+    strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    em {
+      color: var(--accent-primary);
+      font-style: normal;
+      font-weight: 500;
+    }
+  }
+
+  &__ctas {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+
+  &__highlights {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__card {
+    padding: 24px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    transition: all 0.3s var(--ease-standard);
+
+    &:hover {
+      transform: translateY(-4px);
+      border-color: color-mix(in oklab, var(--accent-primary) 40%, transparent);
+      background: var(--card-hover-bg);
+      box-shadow: 0 12px 40px color-mix(in oklab, var(--accent-primary) 8%, transparent);
+    }
+  }
+
+  &__card-icon {
+    display: block;
+    font-size: 1.75rem;
+    margin-bottom: 12px;
+  }
+
+  &__card-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-body);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+  }
+
+  &__card-sub {
+    font-size: var(--fs-body-sm);
+    color: var(--text-secondary);
+    line-height: var(--lh-body);
+  }
+}

@@ -1,0 +1,17 @@
+# *
+User-agent: *
+Allow: /
+
+# Googlebot
+User-agent: Googlebot
+Allow: /
+
+# Bingbot
+User-agent: Bingbot
+Allow: /
+
+# Host
+Host: https://portfolio.lewishadden.com
+
+# Sitemaps
+Sitemap: https://portfolio.lewishadden.com/sitemap.xml

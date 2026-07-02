@@ -1,0 +1,140 @@
+.skills {
+  &__marquee {
+    overflow: hidden;
+    margin-bottom: 48px;
+    padding: 16px 0;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  &__marquee-track {
+    display: flex;
+    gap: 40px;
+    width: max-content;
+    animation: marquee 30s linear infinite;
+  }
+
+  &__marquee-item {
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    color: var(--text-muted);
+    white-space: nowrap;
+    opacity: 0.4;
+    letter-spacing: -0.5px;
+  }
+
+  &__content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  &__tabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  &__tab {
+    padding: 10px 20px;
+    font-size: var(--fs-body-sm);
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-pill);
+    transition: all 0.2s var(--ease-standard);
+
+    &:hover {
+      color: var(--text-primary);
+      border-color: color-mix(in oklab, var(--accent-primary) 40%, transparent);
+    }
+
+    &--active {
+      color: #fff;
+      background: var(--accent-primary);
+      border-color: var(--accent-primary);
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  &__item {
+    padding: 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    transition: all 0.3s var(--ease-standard);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &:hover {
+      transform: translateY(-3px);
+      border-color: color-mix(in oklab, var(--accent-primary) 35%, transparent);
+      box-shadow: 0 8px 30px color-mix(in oklab, var(--accent-primary) 8%, transparent);
+    }
+  }
+
+  &__item-icon {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    background: var(--icon-bg);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--accent-primary);
+  }
+
+  &__item-name {
+    font-size: var(--fs-body-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  &__item-bar {
+    width: 100%;
+    height: 4px;
+    background: color-mix(in oklab, var(--bg-tertiary) 80%, transparent);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  &__item-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+    border-radius: 2px;
+    transition: width 1s var(--ease-standard);
+  }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (max-width: 640px) {
+  .skills {
+    &__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    &__tabs {
+      gap: 6px;
+    }
+
+    &__tab {
+      padding: 8px 14px;
+      font-size: var(--fs-xs);
+    }
+  }
+}

@@ -1,0 +1,516 @@
+{
+  "global": {
+    "openToWork": true,
+    "openToWorkText": "Open to Freelance Gigs · Tech Speaker · Open-Source Contributor",
+    "location": "Telangana, India",
+    "navItems": [
+      {
+        "href": "/",
+        "label": "Home"
+      },
+      {
+        "href": "/about",
+        "label": "About"
+      },
+      {
+        "href": "/projects",
+        "label": "Projects"
+      },
+      {
+        "href": "/skills",
+        "label": "Skills"
+      },
+      {
+        "href": "/contact",
+        "label": "Contact"
+      }
+    ]
+  },
+  "header": {
+    "home": {
+      "href": "/",
+      "label": "KH",
+      "ariaLabel": "Go to home"
+    },
+    "mobile": {
+      "icon": "ph:arrow-up-right"
+    }
+  },
+  "home": {
+    "title": "Kadamanchi Heman",
+    "name": "Heman Kadamanchi",
+    "titles": [
+      "Full-Stack Web Developer",
+      "Google Gemini Student Ambassador",
+      "Community Architect",
+      "Problem Solver"
+    ],
+    "tagline": "Computer Science Engineering undergraduate specializing in building modern, responsive web apps with React, JavaScript, and Firebase. Deploying production-ready solutions on Vercel while championing AI literacy as a student ambassador.",
+    "cta": {
+      "primary": {
+        "text": "Get in Touch",
+        "url": "/contact",
+        "icon": "mdi:message-text-outline",
+        "ariaLabel": "Get in touch with me"
+      },
+      "secondary": {
+        "text": "Explore Projects",
+        "url": "/projects",
+        "icon": "mdi:eye-outline",
+        "ariaLabel": "Explore my projects"
+      }
+    },
+    "stats": [
+      {
+        "value": 4,
+        "suffix": "+",
+        "label": "Mini-Apps Deployed"
+      },
+      {
+        "value": 100,
+        "suffix": "+",
+        "label": "Volunteers Led"
+      },
+      {
+        "value": 100,
+        "suffix": "%",
+        "label": "Code on GitHub"
+      }
+    ]
+  },
+  "about": {
+    "title": "About",
+    "label": "My Journey & Vision",
+    "openToWorkText": "Available for opportunities",
+    "descriptionHeader": "",
+    "description": "<p><strong>Hi, I'm Heman</strong> — a passionate developer and a <em>first-year B.Tech Computer Science Engineering</em> undergraduate. I specialize in the modern JavaScript ecosystem, focusing on building high-speed React frontends integrated with scalable serverless backends like Firebase.</p><p>Beyond writing clean code and diving deep into <em>Data Structures and Algorithms in C</em>, I am deeply invested in ecosystem leadership. As a <strong>Google Gemini Student Ambassador</strong> and a <strong>Senior NSS Volunteer</strong>, I regularly lead technical workshops, orchestrate community awareness campaigns, and direct multi-team production strategies for over 100+ peers. I thrive at the intersection of robust engineering and public impact.</p>",
+    "image": {
+      "url": "/static/images/portrait.png",
+      "size": {
+        "width": 2252,
+        "height": 2526
+      }
+    },
+    "cv": {
+      "download": "Kadamanchi_Heman_CV.pdf"
+    },
+    "cta": {
+      "primary": {
+        "text": "Connect on LinkedIn",
+        "url": "https://linkedin.com/in/kadamanchi-heman",
+        "icon": "mdi:linkedin",
+        "ariaLabel": "Connect with me on LinkedIn"
+      },
+      "secondary": {
+        "text": "View My Toolkit",
+        "url": "/skills",
+        "icon": "mdi:toolbox-outline",
+        "ariaLabel": "View my skills and toolkit"
+      }
+    },
+    "highlights": [
+      {
+        "icon": "mdi:react",
+        "title": "Full-Stack Web Dev",
+        "sub": "Building semi-ecommerce storefronts, business utility platforms, and interactive digital interfaces using React, JS, and Vercel."
+      },
+      {
+        "icon": "mdi:robot-outline",
+        "title": "Tech Ambassadorship",
+        "sub": "Selected to run AI-driven technical literacy workshops and lead modern software adoption initiatives at the university level."
+      },
+      {
+        "icon": "mdi:account-group",
+        "title": "Community Architect",
+        "sub": "Senior NSS volunteer with proven experience coordinating cross-functional teams for large-scale social and technical awareness drives."
+      },
+      {
+        "icon": "mdi:lightbulb-on-outline",
+        "title": "Problem Solver",
+        "sub": "Actively mastering Data Structures, algorithmic optimization, and version-controlled collaborative environments on GitHub."
+      }
+    ]
+  },
+  "experience": {
+    "title": "Experience",
+    "label": "Where I've worked",
+    "done": {
+      "icon": "emojione:hourglass-done"
+    },
+    "items": []
+  },
+  "projects": {
+    "title": "Projects",
+    "label": "What I've Deployed",
+    "items": [
+      {
+        "title": "Heman Enterprises Web App",
+        "startDate": "2024",
+        "description": "A semi-ecommerce storefront engineered for a marketing consultancy with custom workflows and direct database links. The platform enables seamless product browsing, enquiry management, and client interaction through a modern, responsive interface. Built with a React frontend for dynamic UI components, Firebase for real-time database operations and authentication, and deployed on Vercel for blazing-fast global edge delivery. Tailwind CSS powers the utility-first responsive design system.",
+        "theme": {
+          "text": "light",
+          "border": "light",
+          "background": "dark"
+        },
+        "thumbnail": "mdi:store-outline",
+        "images": [],
+        "url": "",
+        "technologies": [
+          {
+            "class": "devicon:react",
+            "name": "React"
+          },
+          {
+            "class": "devicon:javascript",
+            "name": "JavaScript"
+          },
+          {
+            "class": "devicon:firebase",
+            "name": "Firebase"
+          },
+          {
+            "class": "devicon:vercel",
+            "name": "Vercel"
+          },
+          {
+            "class": "devicon:tailwindcss",
+            "name": "Tailwind CSS"
+          }
+        ]
+      },
+      {
+        "title": "Chanti Plumbing Services Platform",
+        "startDate": "2024",
+        "description": "A responsive local services discovery application with an optimized mobile-first layout and seamless domain mapping. Designed for a plumbing services business, the platform showcases services, enables customer contact, and provides an intuitive browsing experience across all device sizes. Built with semantic HTML5 for accessibility and SEO, modern CSS3 with custom properties for theming, and vanilla JavaScript for interactive components. Custom domain infrastructure ensures professional branding and reliable hosting.",
+        "theme": {
+          "text": "light",
+          "border": "light",
+          "background": "dark"
+        },
+        "thumbnail": "mdi:wrench-outline",
+        "images": [],
+        "url": "",
+        "technologies": [
+          {
+            "class": "devicon:html5",
+            "name": "HTML5"
+          },
+          {
+            "class": "devicon:css3",
+            "name": "CSS3"
+          },
+          {
+            "class": "devicon:javascript",
+            "name": "JavaScript"
+          }
+        ]
+      },
+      {
+        "title": "API Integration Suite",
+        "startDate": "2024",
+        "description": "A series of 4 independent mini-applications focusing on asynchronous state handling, third-party API data fetching, and dynamic UI updates. Each application demonstrates a different pattern for consuming REST APIs, managing loading and error states, and rendering real-time data in responsive layouts. Built with modern ES6+ JavaScript for clean async/await patterns, REST API integrations for diverse data sources, and CSS Grid for flexible, responsive layouts that adapt to any viewport.",
+        "theme": {
+          "text": "light",
+          "border": "light",
+          "background": "dark"
+        },
+        "thumbnail": "mdi:api",
+        "images": [],
+        "url": "",
+        "technologies": [
+          {
+            "class": "devicon:javascript",
+            "name": "JavaScript (ES6)"
+          },
+          {
+            "class": "dashicons:rest-api",
+            "name": "REST APIs"
+          },
+          {
+            "class": "devicon:css3",
+            "name": "CSS Grid"
+          }
+        ]
+      },
+      {
+        "title": "THE PERIOD OF 2024 Manuscript",
+        "startDate": "2024",
+        "description": "A structural deep dive and curated book project covering historical frameworks, formatted and optimized for digital publishing channels. This manuscript represents a comprehensive content architecture initiative, involving research, editorial structuring, formatting for multiple digital distribution platforms, and optimization for readability across e-reader devices and web-based publishing systems.",
+        "theme": {
+          "text": "light",
+          "border": "light",
+          "background": "dark"
+        },
+        "thumbnail": "mdi:book-open-page-variant-outline",
+        "images": [],
+        "url": "",
+        "technologies": [
+          {
+            "class": "mdi:file-document-outline",
+            "name": "Digital Publishing"
+          },
+          {
+            "class": "mdi:sitemap-outline",
+            "name": "Content Architecture"
+          }
+        ]
+      }
+    ],
+    "ctaText": "View Details"
+  },
+  "skills": {
+    "title": "Skills",
+    "label": "Core Toolkit",
+    "tagline": "My developing ecosystem for frontend design, backend logic, and digital assets creation.",
+    "marquee": [
+      "React",
+      "JavaScript",
+      "Tailwind CSS",
+      "HTML5",
+      "CSS Modules",
+      "Firebase",
+      "Firestore",
+      "Git",
+      "GitHub",
+      "REST APIs",
+      "C Language",
+      "DSA",
+      "Canva",
+      "Vercel",
+      "Responsive UI"
+    ],
+    "categories": [
+      {
+        "title": "Frontend",
+        "icon": "mdi:monitor",
+        "categoryKey": "frontend"
+      },
+      {
+        "title": "Backend & Version Control",
+        "icon": "mdi:cloud-outline",
+        "categoryKey": "backend"
+      },
+      {
+        "title": "Core Systems & Algorithms",
+        "icon": "mdi:chip",
+        "categoryKey": "systems"
+      },
+      {
+        "title": "Design & Branding",
+        "icon": "mdi:palette-outline",
+        "categoryKey": "design"
+      }
+    ],
+    "icons": [
+      {
+        "name": "React",
+        "class": "devicon:react",
+        "level": "85",
+        "category": "frontend"
+      },
+      {
+        "name": "JavaScript (ES6+)",
+        "class": "devicon:javascript",
+        "level": "90",
+        "category": "frontend"
+      },
+      {
+        "name": "Tailwind CSS",
+        "class": "devicon:tailwindcss",
+        "level": "85",
+        "category": "frontend"
+      },
+      {
+        "name": "HTML5",
+        "class": "devicon:html5",
+        "level": "95",
+        "category": "frontend"
+      },
+      {
+        "name": "CSS Modules",
+        "class": "devicon:css3",
+        "level": "90",
+        "category": "frontend"
+      },
+      {
+        "name": "Responsive UI Design",
+        "class": "mdi:responsive",
+        "level": "85",
+        "category": "frontend"
+      },
+      {
+        "name": "Firebase",
+        "class": "devicon:firebase",
+        "level": "85",
+        "category": "backend"
+      },
+      {
+        "name": "Firestore Database",
+        "class": "devicon:firebase",
+        "level": "80",
+        "category": "backend"
+      },
+      {
+        "name": "Firebase Auth",
+        "class": "mdi:shield-key-outline",
+        "level": "80",
+        "category": "backend"
+      },
+      {
+        "name": "Git",
+        "class": "devicon:git",
+        "level": "85",
+        "category": "backend"
+      },
+      {
+        "name": "GitHub",
+        "class": "devicon:github",
+        "level": "85",
+        "category": "backend"
+      },
+      {
+        "name": "GitHub Codespaces",
+        "class": "devicon:github",
+        "level": "75",
+        "category": "backend"
+      },
+      {
+        "name": "REST APIs",
+        "class": "dashicons:rest-api",
+        "level": "80",
+        "category": "backend"
+      },
+      {
+        "name": "C Language",
+        "class": "devicon:c",
+        "level": "85",
+        "category": "systems"
+      },
+      {
+        "name": "Data Structures & Algorithms",
+        "class": "mdi:graph-outline",
+        "level": "80",
+        "category": "systems"
+      },
+      {
+        "name": "Script Optimization",
+        "class": "mdi:speedometer",
+        "level": "70",
+        "category": "systems"
+      },
+      {
+        "name": "Canva UI Design",
+        "class": "devicon:canva",
+        "level": "85",
+        "category": "design"
+      },
+      {
+        "name": "Digital Media Assets",
+        "class": "mdi:image-multiple-outline",
+        "level": "80",
+        "category": "design"
+      },
+      {
+        "name": "Freepik",
+        "class": "mdi:palette-swatch-outline",
+        "level": "75",
+        "category": "design"
+      },
+      {
+        "name": "Asset Optimization",
+        "class": "mdi:tune-vertical",
+        "level": "75",
+        "category": "design"
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contact",
+    "label": "Let's Collaborate",
+    "tagline": "Available for custom freelance web development contracts, technical speaking engagements, and collaborative web application development.",
+    "contactInfo": {
+      "title": "Get in touch.",
+      "description": "Let's build something great together. I reply within a working day.",
+      "items": [
+        {
+          "name": "Email",
+          "class": "clarity:email-solid",
+          "value": "hemankadamanchi@gmail.com",
+          "link": "mailto:hemankadamanchi@gmail.com"
+        },
+        {
+          "name": "LinkedIn",
+          "class": "mdi:linkedin",
+          "value": "in/kadamanchi-heman",
+          "link": "https://linkedin.com/in/kadamanchi-heman"
+        },
+        {
+          "name": "GitHub",
+          "class": "mdi:github",
+          "value": "k-heman",
+          "link": "https://github.com/k-heman"
+        }
+      ]
+    },
+    "send": {
+      "icon": "mdi:send",
+      "text": "Send Message"
+    },
+    "sendAgain": {
+      "icon": "mdi:email-edit-outline",
+      "text": "Send another message"
+    },
+    "submitting": {
+      "text": "Submitting..."
+    },
+    "error": {
+      "status": "danger",
+      "headerText": "There was a problem sending the message",
+      "bodyText": "Please try again soon, or contact me directly via email or LinkedIn",
+      "icon": "mdi:alert-circle"
+    },
+    "success": {
+      "status": "success",
+      "headerText": "Message sent!",
+      "bodyText": "I will be in touch with you shortly to answer your message.",
+      "icon": "mdi:check-circle"
+    },
+    "close": {
+      "icon": "mdi:close",
+      "ariaLabel": "Close notification"
+    }
+  },
+  "footer": {
+    "name": "Kadamanchi Heman",
+    "tagline": "Full-Stack Web Developer crafting modern web experiences.",
+    "description": "Full-Stack Web Developer & Google Gemini Student Ambassador. Building responsive web platforms and championing AI literacy.",
+    "social": [
+      {
+        "name": "GitHub",
+        "url": "https://github.com/k-heman",
+        "class": "fa6-brands:github"
+      },
+      {
+        "name": "LinkedIn",
+        "url": "https://linkedin.com/in/kadamanchi-heman",
+        "class": "devicon:linkedin"
+      }
+    ],
+    "home": {
+      "text": "Kadamanchi Heman",
+      "url": "/",
+      "ariaLabel": "Back to home"
+    },
+    "navigateText": "Navigate",
+    "elsewhereText": "Elsewhere",
+    "connectText": "Connect",
+    "version": "v1.0 · 2026",
+    "madeInPrefix": "Made in",
+    "copyright": "Designed & built with care.",
+    "builtWith": {
+      "pretext": "Built with ",
+      "icon": "mdi:heart",
+      "posttext": " & Next.js"
+    }
+  }
+}

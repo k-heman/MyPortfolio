@@ -1,0 +1,23 @@
+.starfield {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  background: transparent;
+  display: block;
+
+  // Dark mode star colors (RGB values)
+  --star-color-neutral: 255, 255, 255;
+  --star-color-accent: 167, 139, 250;
+  --star-color-mid: 96, 165, 250;
+
+  &[data-theme='light'] {
+    // Light mode star colors (soft, semi-transparent indigo/purple)
+    --star-color-neutral: 99, 102, 241;
+    --star-color-accent: 124, 58, 237;
+    --star-color-mid: 79, 70, 229;
+  }
+}
