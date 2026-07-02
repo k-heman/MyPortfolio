@@ -58,8 +58,8 @@ export default function Starfield({ theme }: StarfieldProps) {
     const initStars = (width: number, height: number) => {
       const area = width * height;
       // Target around 120 stars for a standard desktop (1920x1080)
-      const starDensity = 0.00006;
-      const starCount = Math.min(Math.floor(area * starDensity), 180);
+      const starDensity = 0.000084;
+      const starCount = Math.min(Math.floor(area * starDensity), 252);
 
       const newStars: Star[] = [];
       for (let i = 0; i < starCount; i++) {
@@ -71,17 +71,17 @@ export default function Starfield({ theme }: StarfieldProps) {
         if (rand < 0.6) {
           // Deep/Background layer: 60% of stars (small, slow, faint)
           size = (Math.random() * 0.6 + 0.4) * 1.2;
-          speed = Math.random() * 0.08 + 0.04;
+          speed = (Math.random() * 0.08 + 0.04) * 1.5;
           baseOpacity = Math.random() * 0.2 + 0.15;
         } else if (rand < 0.9) {
           // Middle layer: 30% of stars (medium size, medium speed, moderate opacity)
           size = (Math.random() * 0.8 + 1.0) * 1.2;
-          speed = Math.random() * 0.15 + 0.12;
+          speed = (Math.random() * 0.15 + 0.12) * 1.5;
           baseOpacity = Math.random() * 0.3 + 0.35;
         } else {
           // Foreground layer: 10% of stars (larger, faster, brighter)
           size = (Math.random() * 1.0 + 1.8) * 1.2;
-          speed = Math.random() * 0.25 + 0.28;
+          speed = (Math.random() * 0.25 + 0.28) * 1.5;
           baseOpacity = Math.random() * 0.3 + 0.65;
         }
 

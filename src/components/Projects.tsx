@@ -1,189 +1,89 @@
 import { useState } from 'react';
 import { useReveal } from '../hooks/useReveal';
+import type { Project, Technology } from '../types';
 
-interface Technology {
-  class: string;
-  name: string;
-}
-
-interface Project {
-  title: string;
-  startDate: string;
-  description: string;
-  technologies: Technology[];
-  url: string;
-}
+import './Projects.scss';
 
 interface ProjectsData {
   title: string;
   label: string;
   items: Project[];
-  ctaText: string;
 }
-
-const styles = {
-  grid: (visible: boolean): React.CSSProperties => ({
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-    gap: '24px',
-    opacity: visible ? 1 : 0,
-    transform: visible ? 'translateY(0)' : 'translateY(32px)',
-    transition: 'opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1)',
-  }),
-  card: {
-    padding: '32px',
-    background: 'var(--card-bg)',
-    border: '1px solid var(--border-color)',
-    borderRadius: 'var(--radius-xl)',
-    transition: 'all 0.3s cubic-bezier(0.4,0,0.2,1)',
-    display: 'flex',
-    flexDirection: 'column' as const,
-    cursor: 'default',
-  },
-  cardHover: {
-    transform: 'translateY(-6px)',
-    borderColor: 'color-mix(in oklab, var(--accent-primary) 35%, transparent)',
-    boxShadow: '0 20px 60px color-mix(in oklab, var(--accent-primary) 10%, transparent)',
-  },
-  cardHeader: {
-    marginBottom: '16px',
-  },
-  year: {
-    display: 'inline-block',
-    fontSize: 'var(--fs-2xs)',
-    fontWeight: 600,
-    color: 'var(--accent-primary)',
-    letterSpacing: '1px',
-    textTransform: 'uppercase' as const,
-    padding: '3px 10px',
-    background: 'color-mix(in oklab, var(--accent-primary) 10%, transparent)',
-    borderRadius: 'var(--radius-pill)',
-    marginBottom: '12px',
-  },
-  cardTitle: {
-    fontFamily: 'var(--font-display)',
-    fontSize: 'var(--fs-h3)',
-    fontWeight: 700,
-    color: 'var(--text-primary)',
-    letterSpacing: '-0.5px',
-  },
-  desc: (expanded: boolean): React.CSSProperties => ({
-    fontSize: 'var(--fs-body-sm)',
-    color: 'var(--text-secondary)',
-    lineHeight: 'var(--lh-loose)',
-    flexGrow: 1,
-    display: '-webkit-box',
-    WebkitLineClamp: expanded ? 'unset' : 4,
-    WebkitBoxOrient: 'vertical' as const,
-    overflow: expanded ? 'visible' : 'hidden',
-  }),
-  toggle: {
-    fontSize: 'var(--fs-xs)',
-    color: 'var(--accent-primary)',
-    fontWeight: 600,
-    marginTop: '8px',
-    padding: 0,
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    transition: 'opacity 0.2s',
-  },
-  techRow: {
-    display: 'flex',
-    flexWrap: 'wrap' as const,
-    gap: '8px',
-    marginTop: '20px',
-    paddingTop: '20px',
-    borderTop: '1px solid var(--border-color)',
-  },
-  chip: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    padding: '4px 12px',
-    fontSize: 'var(--fs-2xs)',
-    fontWeight: 500,
-    background: 'color-mix(in oklab, var(--bg-tertiary) 60%, transparent)',
-    color: 'var(--text-secondary)',
-    border: '1px solid var(--border-color)',
-    borderRadius: 'var(--radius-pill)',
-    transition: 'all 0.2s',
-  },
-  link: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: '4px',
-    marginTop: '16px',
-    fontSize: 'var(--fs-body-sm)',
-    fontWeight: 600,
-    color: 'var(--accent-primary)',
-    textDecoration: 'none',
-    transition: 'gap 0.2s',
-  },
-};
 
 export default function Projects({ projects }: { projects: ProjectsData }) {
   const { ref, visible } = useReveal();
-  const [expanded, setExpanded] = useState<number | null>(null);
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [activeTag, setActiveTag] = useState<string>('All');
+
+  // Extract all unique technologies for the filter tabs
+  const allTags = ['All', ...Array.from(new Set(projects.items.flatMap((p) => p.technologies.map(t => t.name))))];
+  
+  const filteredProjects = activeTag === 'All'
+    ? projects.items
+    : projects.items.filter((p) => p.technologies.some(t => t.name === activeTag));
 
   return (
     <section id="projects" className="section" aria-labelledby="projects-heading">
-      <div className="section__head">
+      <div className="section__head section__head--centered">
         <p className="section__label">{projects.label}</p>
         <h2 id="projects-heading" className="section__title">{projects.title}</h2>
-        <p className="section__sub">
-          A curated cross-section of client platforms, automated tools, and projects built from
-          scratch and shipped to production.
-        </p>
       </div>
 
-      <div ref={ref} style={styles.grid(visible)}>
-        {projects.items.map((project, i) => (
-          <article
-            key={i}
-            style={{
-              ...styles.card,
-              ...(hoveredCard === i ? styles.cardHover : {}),
-            }}
-            onMouseEnter={() => setHoveredCard(i)}
-            onMouseLeave={() => setHoveredCard(null)}
-          >
-            <div style={styles.cardHeader}>
-              <span style={styles.year}>{project.startDate}</span>
-              <h3 style={styles.cardTitle}>{project.title}</h3>
-            </div>
+      <div ref={ref} className={`projects__content ${visible ? 'reveal--visible' : 'reveal'}`}>
+        <div className="projects__filters" role="tablist">
+          {allTags.map((tag) => (
+            <button
+              key={tag}
+              role="tab"
+              aria-selected={activeTag === tag}
+              className={`projects__filter ${activeTag === tag ? 'projects__filter--active' : ''}`}
+              onClick={() => setActiveTag(tag)}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
 
-            <p style={styles.desc(expanded === i)}>{project.description}</p>
+        <div className="projects__grid" role="tabpanel">
+          {filteredProjects.length === 0 ? (
+            <p style={{ textAlign: 'center', gridColumn: '1 / -1', color: 'var(--text-muted)' }}>
+              No projects found for this category.
+            </p>
+          ) : (
+            filteredProjects.map((project, i) => (
+              <article className="projects__card" key={project.id || i}>
+                <div className="projects__card-inner">
+                  <h3 className="projects__card-title">{project.title}</h3>
+                  <p className="projects__card-desc">{project.description}</p>
+                  
+                  <div className="projects__card-tech">
+                    {project.technologies.map((tech, j) => (
+                      <span className="projects__card-tag" key={j}>{tech.name}</span>
+                    ))}
+                  </div>
 
-            {project.description.length > 200 && (
-              <button
-                style={styles.toggle}
-                onClick={() => setExpanded(expanded === i ? null : i)}
-              >
-                {expanded === i ? 'Show less' : 'Read more'}
-              </button>
-            )}
-
-            <div style={styles.techRow}>
-              {project.technologies.map((tech, j) => (
-                <span key={j} style={styles.chip}>
-                  {tech.name}
-                </span>
-              ))}
-            </div>
-
-            {project.url && (
-              <a
-                href={project.url}
-                style={styles.link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View Project →
-              </a>
-            )}
-          </article>
-        ))}
+                  <div className="projects__card-links">
+                    {project.liveUrl && (
+                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="projects__card-link" aria-label={`View ${project.title} live`}>
+                        <svg viewBox="0 0 24 24" fill="none" width="18" height="18" aria-hidden="true">
+                          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                        Live Demo
+                      </a>
+                    )}
+                    {project.githubUrl && (
+                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="projects__card-link" aria-label={`View ${project.title} on GitHub`}>
+                        <svg viewBox="0 0 24 24" fill="none" width="18" height="18" aria-hidden="true">
+                          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                        Source
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </article>
+            ))
+          )}
+        </div>
       </div>
     </section>
   );

@@ -40,7 +40,8 @@ function TypeWriter({ titles }: { titles: string[] }) {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const current = titles[index];
+    if (!titles || titles.length === 0) return;
+    const current = titles[index] || '';
     const speed = deleting ? 40 : 80;
 
     if (!deleting && text === current) {
@@ -78,7 +79,7 @@ export default function Hero({
   openToWork: boolean;
   openToWorkText: string;
 }) {
-  const { name, titles, tagline, cta, stats } = home;
+  const { cta, stats, name, titles, tagline } = home;
 
   return (
     <section id="home" className="hero" aria-labelledby="home-heading">

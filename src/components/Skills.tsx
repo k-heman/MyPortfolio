@@ -1,20 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useReveal } from '../hooks/useReveal';
+import type { Skill, SkillCategory } from '../types';
 
 import './Skills.scss';
-
-interface SkillCategory {
-  title: string;
-  icon: string;
-  categoryKey: string;
-}
-
-interface SkillIcon {
-  name: string;
-  class: string;
-  level: string;
-  category: string;
-}
 
 interface SkillsData {
   title: string;
@@ -22,12 +10,18 @@ interface SkillsData {
   tagline: string;
   marquee: string[];
   categories: SkillCategory[];
-  icons: SkillIcon[];
+  icons: Skill[];
 }
 
 export default function Skills({ skills }: { skills: SkillsData }) {
   const { ref, visible } = useReveal();
-  const [activeCategory, setActiveCategory] = useState(skills.categories[0]?.categoryKey || '');
+  const [activeCategory, setActiveCategory] = useState<string>('');
+  
+  useEffect(() => {
+    if (skills.categories.length > 0 && !activeCategory) {
+      setActiveCategory(skills.categories[0].categoryKey);
+    }
+  }, [skills.categories, activeCategory]);
 
   const filtered = skills.icons.filter((icon) => icon.category === activeCategory);
 
@@ -66,20 +60,26 @@ export default function Skills({ skills }: { skills: SkillsData }) {
 
         {/* Skill icons grid */}
         <div className="skills__grid" role="tabpanel">
-          {filtered.map((skill, i) => (
-            <div className="skills__item" key={i}>
-              <div className="skills__item-icon" aria-hidden="true">
-                {skill.name.charAt(0)}
+          {filtered.length === 0 ? (
+            <p style={{ textAlign: 'center', gridColumn: '1 / -1', color: 'var(--text-muted)' }}>
+              No skills found in this category.
+            </p>
+          ) : (
+            filtered.map((skill, i) => (
+              <div className="skills__item" key={skill.id || i}>
+                <div className="skills__item-icon" aria-hidden="true">
+                  {skill.name.charAt(0)}
+                </div>
+                <span className="skills__item-name">{skill.name}</span>
+                <div className="skills__item-bar">
+                  <div
+                    className="skills__item-fill"
+                    style={{ width: `${skill.level}%` }}
+                  />
+                </div>
               </div>
-              <span className="skills__item-name">{skill.name}</span>
-              <div className="skills__item-bar">
-                <div
-                  className="skills__item-fill"
-                  style={{ width: `${skill.level}%` }}
-                />
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </section>

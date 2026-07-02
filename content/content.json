@@ -97,7 +97,7 @@
     "cta": {
       "primary": {
         "text": "Connect on LinkedIn",
-        "url": "https://linkedin.com/in/kadamanchi-heman",
+        "url": "https://www.linkedin.com/in/heman-k/",
         "icon": "mdi:linkedin",
         "ariaLabel": "Connect with me on LinkedIn"
       },
@@ -435,20 +435,26 @@
         {
           "name": "Email",
           "class": "clarity:email-solid",
-          "value": "hemankadamanchi@gmail.com",
-          "link": "mailto:hemankadamanchi@gmail.com"
+          "value": "k.heman0123@gmail.com",
+          "link": "mailto:k.heman0123@gmail.com"
         },
         {
           "name": "LinkedIn",
           "class": "mdi:linkedin",
-          "value": "in/kadamanchi-heman",
-          "link": "https://linkedin.com/in/kadamanchi-heman"
+          "value": "in/heman-k",
+          "link": "https://www.linkedin.com/in/heman-k/"
         },
         {
           "name": "GitHub",
           "class": "mdi:github",
           "value": "k-heman",
           "link": "https://github.com/k-heman"
+        },
+        {
+          "name": "Instagram",
+          "class": "mdi:instagram",
+          "value": "its_me_sny._",
+          "link": "https://www.instagram.com/its_me_sny._/"
         }
       ]
     },
@@ -492,8 +498,13 @@
       },
       {
         "name": "LinkedIn",
-        "url": "https://linkedin.com/in/kadamanchi-heman",
+        "url": "https://www.linkedin.com/in/heman-k/",
         "class": "devicon:linkedin"
+      },
+      {
+        "name": "Instagram",
+        "url": "https://www.instagram.com/its_me_sny._/",
+        "class": "fa6-brands:instagram"
       }
     ],
     "home": {

@@ -79,6 +79,10 @@
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-xl);
+
+    @media (max-width: 480px) {
+      padding: 20px 16px;
+    }
   }
 
   &__field {

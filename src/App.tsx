@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
 import content from '../content/content.json';
 import Header from './components/Header';
@@ -9,8 +10,15 @@ import Skills from './components/Skills';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Starfield from './components/Starfield';
+import AdminLayout from './admin/AdminLayout';
+import AdminLogin from './admin/AdminLogin';
+import AdminDashboard from './admin/AdminDashboard';
+import ProtectedRoute from './admin/ProtectedRoute';
 
-function App() {
+import Preloader from './components/Preloader';
+import { useFirebaseData, type FirebaseData } from './hooks/useFirebaseData';
+
+function Portfolio({ firebaseData }: { firebaseData: FirebaseData }) {
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     const saved = localStorage.getItem('theme');
     if (saved === 'light' || saved === 'dark') return saved;
@@ -48,6 +56,24 @@ function App() {
     href: item.href === '/' ? '#home' : `#${item.href.replace('/', '')}`,
   }));
 
+  // Merge firebase settings with local content.json
+  const homeData = { ...content.home };
+  if (firebaseData.settings?.heroTitle) homeData.name = firebaseData.settings.heroTitle;
+  if (firebaseData.settings?.heroSubtitle) homeData.titles = firebaseData.settings.heroSubtitle.split(',').map(s => s.trim());
+  if (firebaseData.settings?.heroDescription) homeData.tagline = firebaseData.settings.heroDescription;
+
+  const aboutData = { ...content.about };
+  if (firebaseData.settings?.aboutHeading) aboutData.title = firebaseData.settings.aboutHeading;
+  if (firebaseData.settings?.aboutDescription) aboutData.description = firebaseData.settings.aboutDescription;
+  if (firebaseData.settings?.aboutHighlights) aboutData.highlights = firebaseData.settings.aboutHighlights;
+
+  const projectsData = { ...content.projects };
+  if (firebaseData.projects.length > 0) projectsData.items = firebaseData.projects as any;
+
+  const skillsData = { ...content.skills };
+  if (firebaseData.categories.length > 0) skillsData.categories = firebaseData.categories;
+  if (firebaseData.skills.length > 0) skillsData.icons = firebaseData.skills as any;
+
   return (
     <>
       <Starfield theme={theme} />
@@ -59,14 +85,38 @@ function App() {
         label={content.header.home.label}
       />
       <main id="main-content" ref={mainRef}>
-        <Hero home={content.home} openToWork={content.global.openToWork} openToWorkText={content.global.openToWorkText} />
-        <About about={content.about} location={content.global.location} />
-        <Projects projects={content.projects} />
-        <Skills skills={content.skills} />
+        <Hero home={homeData} openToWork={content.global.openToWork} openToWorkText={content.global.openToWorkText} />
+        <About about={aboutData} location={content.global.location} />
+        <Projects projects={projectsData} />
+        <Skills skills={skillsData} />
         <Contact contact={content.contact} />
       </main>
       <Footer footer={content.footer} navItems={navItems} />
     </>
+  );
+}
+
+function PortfolioWrapper() {
+  const { data, loading, progress, statusText } = useFirebaseData();
+
+  if (loading) {
+    return <Preloader progress={progress} statusText={statusText} />;
+  }
+
+  return <Portfolio firebaseData={data} />;
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<PortfolioWrapper />} />
+      <Route element={<AdminLayout />}>
+        <Route path="/admin" element={<AdminLogin />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        </Route>
+      </Route>
+    </Routes>
   );
 }
 

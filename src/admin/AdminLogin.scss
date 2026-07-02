@@ -1,0 +1,397 @@
+/* =============================================================
+   Admin Login — Portfolio-matched dark theme
+   Uses the same orbs, gradients, and glassmorphism as Hero
+   ============================================================= */
+.admin-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: var(--bg-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ---- Floating orbs (from Hero) ---- */
+.admin-login__bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.admin-login__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  animation: admin-orb-float 20s ease-in-out infinite;
+
+  &--1 {
+    width: 500px;
+    height: 500px;
+    background: var(--gradient-start);
+    opacity: 0.1;
+    top: -15%;
+    right: -5%;
+  }
+
+  &--2 {
+    width: 400px;
+    height: 400px;
+    background: var(--gradient-mid);
+    opacity: 0.08;
+    bottom: -10%;
+    left: -10%;
+    animation-delay: -7s;
+  }
+
+  &--3 {
+    width: 300px;
+    height: 300px;
+    background: var(--gradient-end);
+    opacity: 0.06;
+    top: 50%;
+    left: 60%;
+    animation-delay: -14s;
+  }
+}
+
+@keyframes admin-orb-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 15px) scale(0.95); }
+}
+
+/* ---- Subtle grid lines ---- */
+.admin-login__grid-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(
+      color-mix(in oklab, var(--accent-primary) 4%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--accent-primary) 4%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 20%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 20%, transparent 100%);
+}
+
+/* ---- Card ---- */
+.admin-login__card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  padding: 0 40px 40px;
+  background: color-mix(in oklab, var(--bg-secondary) 70%, transparent);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-2xl);
+  backdrop-filter: blur(24px) saturate(1.4);
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.45),
+    0 0 120px color-mix(in oklab, var(--accent-primary) 5%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  animation: admin-card-enter 0.7s var(--ease-standard) both;
+  overflow: hidden;
+}
+
+/* Top gradient accent bar */
+.admin-login__accent {
+  height: 3px;
+  margin: 0 -40px 40px;
+  background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+}
+
+@keyframes admin-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(32px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ---- Header ---- */
+.admin-login__header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.admin-login__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 20px;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: #fff;
+  box-shadow:
+    0 8px 32px color-mix(in oklab, var(--accent-primary) 35%, transparent),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+.admin-login__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, var(--fs-h2));
+  font-weight: var(--fw-heavy);
+  letter-spacing: var(--tr-title);
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  line-height: var(--lh-tight);
+}
+
+.admin-login__title-accent {
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.admin-login__subtitle {
+  font-size: var(--fs-body-sm);
+  color: var(--text-muted);
+  line-height: var(--lh-body);
+}
+
+/* ---- Form ---- */
+.admin-login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.admin-login__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--fs-caption);
+    font-weight: var(--fw-semibold);
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+
+    svg {
+      color: var(--accent-primary);
+      opacity: 0.7;
+    }
+  }
+
+  input {
+    width: 100%;
+    padding: 14px 16px;
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    color: var(--text-primary);
+    background: color-mix(in oklab, var(--bg-tertiary) 50%, transparent);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    outline: none;
+    transition:
+      border-color var(--dur-fast) var(--ease-standard),
+      box-shadow var(--dur-fast) var(--ease-standard),
+      background var(--dur-fast) var(--ease-standard);
+
+    &::placeholder {
+      color: var(--text-muted);
+    }
+
+    &:focus {
+      border-color: var(--accent-primary);
+      box-shadow:
+        0 0 0 3px color-mix(in oklab, var(--accent-primary) 15%, transparent),
+        0 0 20px color-mix(in oklab, var(--accent-primary) 8%, transparent);
+      background: color-mix(in oklab, var(--bg-tertiary) 70%, transparent);
+    }
+  }
+}
+
+/* ---- Password toggle ---- */
+.admin-login__password-wrap {
+  position: relative;
+
+  input {
+    padding-right: 48px;
+  }
+}
+
+.admin-login__password-toggle {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-standard), background var(--dur-fast) var(--ease-standard);
+
+  &:hover {
+    color: var(--accent-primary);
+    background: color-mix(in oklab, var(--accent-primary) 8%, transparent);
+  }
+}
+
+/* ---- Submit Button ---- */
+.admin-login__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 15px 30px;
+  margin-top: 8px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  box-shadow:
+    0 8px 32px color-mix(in oklab, var(--accent-primary) 30%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: all var(--dur-med) var(--ease-standard);
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%);
+    pointer-events: none;
+  }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow:
+      0 16px 48px color-mix(in oklab, var(--accent-primary) 40%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
+    &::after {
+      animation: btn-shimmer 0.7s ease forwards;
+    }
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  svg {
+    transition: transform var(--dur-fast) var(--ease-standard);
+  }
+
+  &:hover:not(:disabled) svg {
+    transform: translateX(3px);
+  }
+}
+
+/* ---- Spinner ---- */
+.admin-login__spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: admin-spin 0.6s linear infinite;
+}
+
+@keyframes admin-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---- Error ---- */
+.admin-login__error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  font-size: var(--fs-caption);
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: var(--radius-md);
+  animation: admin-shake 0.4s ease;
+  line-height: var(--lh-body);
+}
+
+.admin-login__error-svg {
+  flex-shrink: 0;
+  color: #f87171;
+}
+
+@keyframes admin-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+/* ---- Footer / back link ---- */
+.admin-login__footer {
+  margin-top: 28px;
+  text-align: center;
+}
+
+.admin-login__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-medium);
+  color: var(--text-muted);
+  transition: color var(--dur-fast) var(--ease-standard), gap var(--dur-fast) var(--ease-standard);
+
+  &:hover {
+    color: var(--accent-primary);
+    gap: 10px;
+  }
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 480px) {
+  .admin-login__card {
+    padding: 0 24px 32px;
+  }
+
+  .admin-login__accent {
+    margin: 0 -24px 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-login__card { animation: none; }
+  .admin-login__error { animation: none; }
+  .admin-login__orb { animation: none; }
+}

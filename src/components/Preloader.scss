@@ -1,0 +1,120 @@
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: #0d1117; // GitHub dark bg or deep space black
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+
+  &__terminal {
+    width: 100%;
+    max-width: 700px;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+
+  &__header {
+    background: #010409;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #30363d;
+  }
+
+  &__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+
+    &--red { background: #ff5f56; }
+    &--yellow { background: #ffbd2e; }
+    &--green { background: #27c93f; }
+  }
+
+  &__title {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 12px;
+    color: #8b949e;
+    font-weight: 500;
+  }
+
+  &__body {
+    padding: 24px;
+    min-height: 200px;
+    color: #c9d1d9;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  &__line {
+    margin: 0 0 12px 0;
+    
+    &--status {
+      color: #58a6ff; // Neon blue
+    }
+    
+    &--success {
+      color: #3fb950; // Neon green
+      margin-top: 16px;
+      animation: fadeIn 0.3s ease-in;
+    }
+  }
+
+  &__prompt {
+    color: #3fb950;
+    font-weight: 700;
+  }
+
+  &__progress {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 20px;
+    color: #c9d1d9;
+    white-space: pre;
+    flex-wrap: wrap;
+  }
+
+  &__progress-bar {
+    color: #d2a8ff; // Purple accent
+  }
+
+  &__progress-text {
+    color: #58a6ff;
+    font-weight: bold;
+  }
+
+  &__cursor {
+    display: inline-block;
+    width: 8px;
+    height: 16px;
+    background: #c9d1d9;
+    vertical-align: middle;
+    animation: terminal-blink 1s step-end infinite;
+    margin-top: 12px;
+  }
+}
+
+@keyframes terminal-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 640px) {
+  .preloader__progress {
+    font-size: 12px;
+  }
+}

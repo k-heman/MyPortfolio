@@ -1,5 +1,4 @@
 import { useReveal } from '../hooks/useReveal';
-
 import './About.scss';
 
 interface Highlight {
@@ -11,70 +10,58 @@ interface Highlight {
 interface AboutData {
   title: string;
   label: string;
+  openToWorkText: string;
+  descriptionHeader: string;
   description: string;
-  cta: {
-    primary: { text: string; url: string; ariaLabel: string };
-    secondary: { text: string; url: string; ariaLabel: string };
-  };
+  image: { url: string; size: { width: number; height: number } };
+  cv: { download: string };
+  cta: any;
   highlights: Highlight[];
 }
 
-const iconMap: Record<string, string> = {
-  'mdi:react': '⚛️',
-  'mdi:robot-outline': '🤖',
-  'mdi:account-group': '👥',
-  'mdi:lightbulb-on-outline': '💡',
-};
-
-export default function About({ about, location }: { about: AboutData; location: string }) {
+export default function About({
+  about,
+  location,
+}: {
+  about: AboutData;
+  location: string;
+}) {
   const { ref, visible } = useReveal();
-
-  const isExternal = about.cta.primary.url.startsWith('http');
 
   return (
     <section id="about" className="section" aria-labelledby="about-heading">
-      <div className="section__head">
-        <p className="section__label">{about.label}</p>
-        <h2 id="about-heading" className="section__title">{about.title}</h2>
+      <div className="section__head section__head--centered">
+        <p className="section__label">Background</p>
+        <h2 id="about-heading" className="section__title">
+          {about.title}
+        </h2>
       </div>
 
-      <div ref={ref} className={`about ${visible ? 'reveal--visible' : 'reveal'}`}>
-        <div className="about__grid">
-          <div className="about__text">
-            <div className="about__location">
-              <span aria-hidden="true">📍</span> {location}
-            </div>
-            <div className="about__bio" dangerouslySetInnerHTML={{ __html: about.description }} />
-            <div className="about__ctas">
-              <a
-                href={about.cta.primary.url}
-                className="btn btn--primary"
-                aria-label={about.cta.primary.ariaLabel}
-                {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-              >
-                {about.cta.primary.text}
-              </a>
-              <a
-                href={about.cta.secondary.url.replace('/', '#')}
-                className="btn btn--secondary"
-                aria-label={about.cta.secondary.ariaLabel}
-              >
-                {about.cta.secondary.text}
-              </a>
-            </div>
+      <div ref={ref} className={`about__grid ${visible ? 'reveal--visible' : 'reveal'}`}>
+        <div className="about__text-block">
+          <div className="about__description" dangerouslySetInnerHTML={{ __html: about.description }} />
+          <div className="about__location">
+            <svg viewBox="0 0 24 24" fill="none" width="18" height="18" aria-hidden="true">
+              <path
+                d="M12 21c-4-4-8-9.5-8-13a8 8 0 1116 0c0 3.5-4 9-8 13z"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <circle cx="12" cy="8" r="3" stroke="currentColor" strokeWidth="2" />
+            </svg>
+            Based in {location}
           </div>
+        </div>
 
-          <div className="about__highlights">
-            {about.highlights.map((h, i) => (
-              <div className="about__card" key={i} style={{ animationDelay: `${i * 0.1}s` }}>
-                <span className="about__card-icon" aria-hidden="true">
-                  {iconMap[h.icon] || '🔧'}
-                </span>
-                <h3 className="about__card-title">{h.title}</h3>
-                <p className="about__card-sub">{h.sub}</p>
-              </div>
-            ))}
-          </div>
+        <div className="about__cards">
+          {about.highlights.map((highlight, index) => (
+            <div className="about__card" key={index}>
+              <h3 className="about__card-title">{highlight.title}</h3>
+              <p className="about__card-sub">{highlight.sub}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
