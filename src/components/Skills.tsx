@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Icon } from '@iconify/react';
 import { useReveal } from '../hooks/useReveal';
 import type { Skill, SkillCategory } from '../types';
 
@@ -68,7 +69,7 @@ export default function Skills({ skills }: { skills: SkillsData }) {
             filtered.map((skill, i) => (
               <div className="skills__item" key={skill.id || i}>
                 <div className="skills__item-icon" aria-hidden="true">
-                  {skill.name.charAt(0)}
+                  <Icon icon={skill.class} width="24" height="24" />
                 </div>
                 <span className="skills__item-name">{skill.name}</span>
                 <div className="skills__item-bar">

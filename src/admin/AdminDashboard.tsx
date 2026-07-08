@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { collection, addDoc, getDocs, doc, setDoc, getDoc, query, orderBy, deleteDoc } from 'firebase/firestore';
+import { Icon } from '@iconify/react';
 
 import { auth, db } from '../config/firebase';
 import type { User } from 'firebase/auth';
@@ -59,8 +60,15 @@ export default function AdminDashboard() {
 
   // Skill form state
   const [skillName, setSkillName] = useState('');
+  const [skillClass, setSkillClass] = useState('');
   const [skillCategory, setSkillCategory] = useState('');
   const [skillLevel, setSkillLevel] = useState('50');
+
+  const handleSkillNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setSkillName(val);
+    setSkillClass(`logos:${val.toLowerCase().replace(/\s+/g, '-')}`);
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -335,7 +343,7 @@ export default function AdminDashboard() {
           name: skillName,
           category: skillCategory,
           level: skillLevel,
-          class: `icon-${skillName.toLowerCase().replace(/\s+/g, '-')}`,
+          class: skillClass || `logos:${skillName.toLowerCase().replace(/\s+/g, '-')}`,
         };
 
         await setDoc(doc(db, 'skills', editingSkill.id!), updatedSkill);
@@ -348,7 +356,7 @@ export default function AdminDashboard() {
           name: skillName,
           category: skillCategory,
           level: skillLevel,
-          class: `icon-${skillName.toLowerCase().replace(/\s+/g, '-')}`,
+          class: skillClass || `logos:${skillName.toLowerCase().replace(/\s+/g, '-')}`,
         };
         const docRef = await addDoc(collection(db, 'skills'), newSkill);
         setSkills([...skills, { id: docRef.id, ...newSkill }]);
@@ -357,6 +365,7 @@ export default function AdminDashboard() {
       }
 
       setSkillName(''); 
+      setSkillClass('');
       if (categories.length > 0) setSkillCategory(categories[0].categoryKey);
       setSkillLevel('50');
     } catch (err) {
@@ -370,6 +379,7 @@ export default function AdminDashboard() {
   const handleEditSkillClick = (skill: Skill) => {
     setEditingSkill(skill);
     setSkillName(skill.name);
+    setSkillClass(skill.class || `logos:${skill.name.toLowerCase().replace(/\s+/g, '-')}`);
     setSkillCategory(skill.category);
     setSkillLevel(skill.level);
 
@@ -387,7 +397,7 @@ export default function AdminDashboard() {
       showFeedback('Skill deleted.', 'success');
       if (editingSkill?.id === id) {
         setEditingSkill(null);
-        setSkillName(''); setSkillLevel('50');
+        setSkillName(''); setSkillClass(''); setSkillLevel('50');
       }
     } catch (err) {
       console.error("Error deleting skill: ", err);
@@ -398,6 +408,7 @@ export default function AdminDashboard() {
   const handleCancelSkillEdit = () => {
     setEditingSkill(null);
     setSkillName(''); 
+    setSkillClass('');
     if (categories.length > 0) setSkillCategory(categories[0].categoryKey);
     setSkillLevel('50');
   };
@@ -977,7 +988,17 @@ export default function AdminDashboard() {
                   </h3>
                   <div className="admin-dashboard__form-group">
                     <label htmlFor="skillName">Skill Name</label>
-                    <input id="skillName" type="text" required value={skillName} onChange={(e) => setSkillName(e.target.value)} placeholder="e.g. React" />
+                    <input id="skillName" type="text" required value={skillName} onChange={handleSkillNameChange} placeholder="e.g. React" />
+                  </div>
+                  <div className="admin-dashboard__form-group">
+                    <label htmlFor="skillClass">Logo (Iconify ID)</label>
+                    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                      <input id="skillClass" type="text" required value={skillClass} onChange={(e) => setSkillClass(e.target.value)} placeholder="e.g. logos:react" style={{ flex: 1 }} />
+                      <div style={{ padding: '8px', background: 'var(--bg-secondary)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', display: 'grid', placeItems: 'center', minWidth: '42px', minHeight: '42px' }}>
+                        {skillClass ? <Icon icon={skillClass} width="24" height="24" /> : <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>No Icon</span>}
+                      </div>
+                    </div>
+                    <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '4px', display: 'block' }}>Suggested automatically. You can find more icons at <a href="https://icon-sets.iconify.design/" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-primary)' }}>Iconify</a>.</small>
                   </div>
                   <div className="admin-dashboard__form-group">
                     <label htmlFor="skillCategory">Category</label>
