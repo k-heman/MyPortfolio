@@ -55,6 +55,7 @@ export default function AdminDashboard() {
   const [projectTitle, setProjectTitle] = useState('');
   const [projectDescription, setProjectDescription] = useState('');
   const [projectTechStack, setProjectTechStack] = useState('');
+  const [projectImageUrl, setProjectImageUrl] = useState('');
   const [projectLiveUrl, setProjectLiveUrl] = useState('');
   const [projectGithubUrl, setProjectGithubUrl] = useState('');
 
@@ -63,6 +64,7 @@ export default function AdminDashboard() {
   const [skillClass, setSkillClass] = useState('');
   const [skillCategory, setSkillCategory] = useState('');
   const [skillLevel, setSkillLevel] = useState('50');
+  const [skillTags, setSkillTags] = useState('');
 
   const handleSkillNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
@@ -262,6 +264,7 @@ export default function AdminDashboard() {
           url: projectLiveUrl,
           liveUrl: projectLiveUrl,
           githubUrl: projectGithubUrl,
+          imageUrl: projectImageUrl,
           startDate: editingProject.startDate || new Date().getFullYear().toString(),
         };
 
@@ -278,6 +281,7 @@ export default function AdminDashboard() {
           url: projectLiveUrl,
           liveUrl: projectLiveUrl,
           githubUrl: projectGithubUrl,
+          imageUrl: projectImageUrl,
           startDate: new Date().getFullYear().toString(),
         };
 
@@ -288,7 +292,7 @@ export default function AdminDashboard() {
       }
 
       // Reset fields
-      setProjectTitle(''); setProjectDescription(''); setProjectTechStack(''); setProjectLiveUrl(''); setProjectGithubUrl('');
+      setProjectTitle(''); setProjectDescription(''); setProjectTechStack(''); setProjectImageUrl(''); setProjectLiveUrl(''); setProjectGithubUrl('');
     } catch (err) {
       console.error("Error saving project: ", err);
       showFeedback('Failed to save project.', 'error');
@@ -302,6 +306,7 @@ export default function AdminDashboard() {
     setProjectTitle(project.title);
     setProjectDescription(project.description);
     setProjectTechStack(project.technologies.map(t => t.name).join(', '));
+    setProjectImageUrl(project.imageUrl || '');
     setProjectLiveUrl(project.liveUrl || '');
     setProjectGithubUrl(project.githubUrl || '');
     
@@ -319,7 +324,7 @@ export default function AdminDashboard() {
       showFeedback('Project deleted.', 'success');
       if (editingProject?.id === id) {
         setEditingProject(null);
-        setProjectTitle(''); setProjectDescription(''); setProjectTechStack(''); setProjectLiveUrl(''); setProjectGithubUrl('');
+        setProjectTitle(''); setProjectDescription(''); setProjectTechStack(''); setProjectImageUrl(''); setProjectLiveUrl(''); setProjectGithubUrl('');
       }
     } catch (err) {
       console.error("Error deleting project: ", err);
@@ -329,7 +334,7 @@ export default function AdminDashboard() {
 
   const handleCancelProjectEdit = () => {
     setEditingProject(null);
-    setProjectTitle(''); setProjectDescription(''); setProjectTechStack(''); setProjectLiveUrl(''); setProjectGithubUrl('');
+    setProjectTitle(''); setProjectDescription(''); setProjectTechStack(''); setProjectImageUrl(''); setProjectLiveUrl(''); setProjectGithubUrl('');
   };
 
   const handleAddSkill = async (e: React.FormEvent) => {
@@ -344,6 +349,7 @@ export default function AdminDashboard() {
           category: skillCategory,
           level: skillLevel,
           class: skillClass || `logos:${skillName.toLowerCase().replace(/\s+/g, '-')}`,
+          skillTags: skillTags,
         };
 
         await setDoc(doc(db, 'skills', editingSkill.id!), updatedSkill);
@@ -357,6 +363,7 @@ export default function AdminDashboard() {
           category: skillCategory,
           level: skillLevel,
           class: skillClass || `logos:${skillName.toLowerCase().replace(/\s+/g, '-')}`,
+          skillTags: skillTags,
         };
         const docRef = await addDoc(collection(db, 'skills'), newSkill);
         setSkills([...skills, { id: docRef.id, ...newSkill }]);
@@ -368,6 +375,7 @@ export default function AdminDashboard() {
       setSkillClass('');
       if (categories.length > 0) setSkillCategory(categories[0].categoryKey);
       setSkillLevel('50');
+      setSkillTags('');
     } catch (err) {
       console.error("Error saving skill: ", err);
       showFeedback('Failed to save skill.', 'error');
@@ -382,6 +390,7 @@ export default function AdminDashboard() {
     setSkillClass(skill.class || `logos:${skill.name.toLowerCase().replace(/\s+/g, '-')}`);
     setSkillCategory(skill.category);
     setSkillLevel(skill.level);
+    setSkillTags(skill.skillTags || '');
 
     // Scroll down to form
     const formElement = document.getElementById('skill-form');
@@ -397,7 +406,7 @@ export default function AdminDashboard() {
       showFeedback('Skill deleted.', 'success');
       if (editingSkill?.id === id) {
         setEditingSkill(null);
-        setSkillName(''); setSkillClass(''); setSkillLevel('50');
+        setSkillName(''); setSkillClass(''); setSkillLevel('50'); setSkillTags('');
       }
     } catch (err) {
       console.error("Error deleting skill: ", err);
@@ -411,6 +420,7 @@ export default function AdminDashboard() {
     setSkillClass('');
     if (categories.length > 0) setSkillCategory(categories[0].categoryKey);
     setSkillLevel('50');
+    setSkillTags('');
   };
 
   const handleDeleteMessage = async (id: string) => {
@@ -480,7 +490,9 @@ export default function AdminDashboard() {
     <div className="admin-dashboard">
       <aside className="admin-dashboard__sidebar">
         <div className="admin-dashboard__sidebar-top">
-          <a href="/" className="admin-dashboard__logo">KH</a>
+          <a href="/" className="admin-dashboard__logo">
+            <img src="/hemanlogo.png" alt="HK Logo" className="admin-dashboard__logo-img" />
+          </a>
           <span className="admin-dashboard__logo-label">Admin</span>
         </div>
 
@@ -915,6 +927,10 @@ export default function AdminDashboard() {
                     <label htmlFor="projectTechStack">Tech Stack <span>(comma separated)</span></label>
                     <input id="projectTechStack" type="text" required value={projectTechStack} onChange={(e) => setProjectTechStack(e.target.value)} placeholder="e.g. React, Node.js, Firebase" />
                   </div>
+                  <div className="admin-dashboard__form-group">
+                    <label htmlFor="projectImageUrl">Project Image URL (Cloudinary) <span>(optional)</span></label>
+                    <input id="projectImageUrl" type="url" value={projectImageUrl} onChange={(e) => setProjectImageUrl(e.target.value)} placeholder="https://res.cloudinary.com/..." />
+                  </div>
                   <div className="admin-dashboard__form-row">
                     <div className="admin-dashboard__form-group">
                       <label htmlFor="projectLiveUrl">Live URL <span>(optional)</span></label>
@@ -1014,6 +1030,10 @@ export default function AdminDashboard() {
                   <div className="admin-dashboard__form-group">
                     <label htmlFor="skillLevel">Proficiency Level: <span className="admin-dashboard__slider-val">{skillLevel}%</span></label>
                     <input id="skillLevel" type="range" min="1" max="100" value={skillLevel} onChange={(e) => setSkillLevel(e.target.value)} className="admin-dashboard__slider" />
+                  </div>
+                  <div className="admin-dashboard__form-group">
+                    <label htmlFor="skillTags">Skill Tags <span>(comma-separated, e.g., Hooks, API Integration, State Management)</span></label>
+                    <input id="skillTags" type="text" value={skillTags} onChange={(e) => setSkillTags(e.target.value)} placeholder="e.g., Hooks, API Integration, State Management" />
                   </div>
                   <div style={{ display: 'flex', gap: '12px' }}>
                     <button type="submit" className="admin-dashboard__submit-btn" disabled={isSubmitting || categories.length === 0} style={{ flex: 1 }}>

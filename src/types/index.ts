@@ -24,6 +24,7 @@ export interface Project {
   liveUrl?: string;
   githubUrl?: string;
   thumbnail?: string;
+  imageUrl?: string;
 }
 
 /**
@@ -36,6 +37,7 @@ export interface Skill {
   class: string;
   level: string;
   category: string;
+  skillTags?: string;
 }
 
 /** A skill category tab used for filtering the skills grid. */

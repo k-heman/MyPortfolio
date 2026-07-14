@@ -12,10 +12,9 @@ interface HeaderProps {
   activeSection: string;
   theme: 'dark' | 'light';
   toggleTheme: () => void;
-  label: string;
 }
 
-export default function Header({ navItems, activeSection, theme, toggleTheme, label }: HeaderProps) {
+export default function Header({ navItems, activeSection, theme, toggleTheme }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -38,9 +37,6 @@ export default function Header({ navItems, activeSection, theme, toggleTheme, la
   return (
     <header className={`header ${scrolled ? 'header--scrolled' : ''}`}>
       <div className="header__inner">
-        <a href="#home" className="header__logo" aria-label="Go to home">
-          {label}
-        </a>
 
         <nav className={`header__nav ${menuOpen ? 'header__nav--open' : ''}`} aria-label="Main navigation">
           <ul className="header__list">

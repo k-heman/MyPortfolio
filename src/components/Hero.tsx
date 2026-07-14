@@ -91,6 +91,14 @@ export default function Hero({
 
       <div className="hero__inner">
         <div className="hero__content">
+          <img
+            src="/hemanlogo.png"
+            alt="Heman K logo"
+            className="hero__logo"
+            width="80"
+            height="80"
+          />
+
           {openToWork && (
             <div className="hero__badge">
               <span className="hero__badge-dot" aria-hidden="true" />

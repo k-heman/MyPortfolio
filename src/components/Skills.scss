@@ -25,7 +25,7 @@
   }
 
   &__content {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
   }
 
@@ -59,61 +59,203 @@
     }
   }
 
+  /* ── Card grid ── */
   &__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
+    perspective: 1000px;
   }
 
-  &__item {
-    padding: 20px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    transition: all 0.3s var(--ease-standard);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  /* ── Flip card wrapper ── */
+  &__card {
+    position: relative;
+    height: 200px;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 
-    &:hover {
-      transform: translateY(-3px);
-      border-color: color-mix(in oklab, var(--accent-primary) 35%, transparent);
-      box-shadow: 0 8px 30px color-mix(in oklab, var(--accent-primary) 8%, transparent);
+    &:focus-visible {
+      outline: 2px solid var(--accent-primary);
+      outline-offset: 4px;
+      border-radius: var(--radius-lg);
+    }
+
+    &--flipped {
+      transform: rotateY(180deg);
     }
   }
 
-  &__item-icon {
-    width: 40px;
-    height: 40px;
-    display: grid;
-    place-items: center;
-    background: var(--icon-bg);
-    border-radius: var(--radius-sm);
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 1rem;
-    color: var(--accent-primary);
+  /* ── Shared face styles ── */
+  &__card-front,
+  &__card-back {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    backface-visibility: hidden;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    background: color-mix(in oklab, var(--bg-secondary) 70%, transparent);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    transition: border-color 0.35s var(--ease-standard),
+                box-shadow 0.35s var(--ease-standard);
   }
 
-  &__item-name {
+  /* ── Front face ── */
+  &__card-front {
+    gap: 16px;
+    padding: 32px 16px 24px;
+
+    /* Subtle glow ring on hover */
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      opacity: 0;
+      background: radial-gradient(
+        circle at 50% 30%,
+        color-mix(in oklab, var(--brand-color, var(--accent-primary)) 12%, transparent),
+        transparent 70%
+      );
+      transition: opacity 0.35s var(--ease-standard);
+      pointer-events: none;
+    }
+  }
+
+  /* Front face hover (only when not flipped) */
+  &__card:not(&__card--flipped):hover &__card-front {
+    border-color: color-mix(in oklab, var(--brand-color, var(--accent-primary)) 50%, transparent);
+    box-shadow:
+      0 12px 40px color-mix(in oklab, var(--brand-color, var(--accent-primary)) 12%, transparent),
+      0 0 0 1px color-mix(in oklab, var(--brand-color, var(--accent-primary)) 20%, transparent);
+
+    &::before {
+      opacity: 1;
+    }
+
+    .skills__card-icon {
+      transform: scale(1.12);
+    }
+  }
+
+  /* ── Back face ── */
+  &__card-back {
+    transform: rotateY(180deg);
+    gap: 12px;
+    padding: 28px 24px;
+    justify-content: center;
+    background: color-mix(in oklab, #6366f1 8%, var(--bg-secondary)); /* Distinct subtly tinted surface */
+  }
+
+  /* Back face hover (only when flipped) */
+  &__card--flipped:hover &__card-back {
+    border-color: color-mix(in oklab, var(--brand-color, var(--accent-primary)) 50%, transparent);
+    box-shadow:
+      0 12px 40px color-mix(in oklab, var(--brand-color, var(--accent-primary)) 12%, transparent),
+      0 0 0 1px color-mix(in oklab, var(--brand-color, var(--accent-primary)) 20%, transparent);
+  }
+
+  /* ── Icon container (front) ── */
+  &__card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.08);
+    transition: transform 0.35s var(--ease-standard);
+
+    svg {
+      width: 44px;
+      height: 44px;
+    }
+  }
+
+  &__card-name {
     font-size: var(--fs-body-sm);
-    font-weight: 600;
-    color: var(--text-primary);
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
   }
 
-  &__item-bar {
+  /* ── Back face elements ── */
+  &__card-level-label {
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+  }
+
+  &__card-pills-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex: 1;
     width: 100%;
-    height: 4px;
-    background: color-mix(in oklab, var(--bg-tertiary) 80%, transparent);
-    border-radius: 2px;
+    margin: 8px 0;
+    overflow-y: auto;
+
+    /* Hide scrollbar */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  &__card-pill {
+    padding: 6px 14px;
+    font-size: var(--fs-xs, 12px);
+    font-weight: 500;
+    color: var(--text-primary);
+    background: color-mix(in oklab, var(--text-primary) 8%, transparent);
+    border: 1px solid color-mix(in oklab, var(--text-primary) 12%, transparent);
+    border-radius: 9999px; /* full rounded capsule */
+    white-space: nowrap;
+    text-align: center;
+    width: 100%;
+    max-width: 90%;
+    text-overflow: ellipsis;
     overflow: hidden;
   }
 
-  &__item-fill {
+  &__card-bar {
+    width: 100%;
+    height: 6px;
+    background: color-mix(in oklab, var(--bg-tertiary, #333) 80%, transparent);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  &__card-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
-    border-radius: 2px;
-    transition: width 1s var(--ease-standard);
+    border-radius: 3px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+    /* 0.3s delay so the bar animates after the flip completes */
+  }
+}
+
+/* ── Light theme overrides ── */
+[data-theme='light'] .skills {
+  &__card-front {
+    background: color-mix(in oklab, var(--bg-secondary) 90%, transparent);
+  }
+  &__card-back {
+    background: color-mix(in oklab, #6366f1 6%, var(--bg-secondary)); 
+  }
+
+  &__card-icon {
+    background: rgba(0, 0, 0, 0.06);
   }
 }
 
@@ -126,9 +268,31 @@
   .skills {
     &__grid {
       grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
 
-      @media (max-width: 400px) {
-        grid-template-columns: 1fr;
+    &__card {
+      height: 180px;
+    }
+
+    &__card-front {
+      padding: 24px 12px 20px;
+      gap: 12px;
+    }
+
+    &__card-back {
+      padding: 20px 16px;
+      gap: 10px;
+    }
+
+    &__card-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 14px;
+
+      svg {
+        width: 36px;
+        height: 36px;
       }
     }
 
@@ -140,5 +304,11 @@
       padding: 8px 14px;
       font-size: var(--fs-xs);
     }
+  }
+}
+
+@media (max-width: 400px) {
+  .skills__grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

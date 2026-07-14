@@ -43,21 +43,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    padding: 8px 8px 8px 20px;
-  }
-
-  &__logo {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 1.1rem;
-    letter-spacing: -0.5px;
-    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-decoration: none;
-    white-space: nowrap;
-    margin-right: 8px;
+    padding: 8px 8px 8px 16px;
   }
 
   &__nav {

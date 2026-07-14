@@ -62,6 +62,17 @@
     max-width: 720px;
   }
 
+  &__logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: var(--radius-lg, 12px);
+    margin-top: -8px;
+    margin-bottom: 16px;
+    filter: drop-shadow(0 0 16px color-mix(in oklab, var(--accent-primary) 30%, transparent));
+    animation: logo-fade-in 0.8s ease-out both;
+  }
+
   &__badge {
     display: inline-flex;
     align-items: center;
@@ -237,9 +248,25 @@
   50% { transform: translateX(-50%) translateY(8px); }
 }
 
+@keyframes logo-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @media (max-width: 640px) {
   .hero {
     padding: 100px 20px 60px;
+
+    &__logo {
+      width: 64px;
+      height: 64px;
+    }
 
     &__stats {
       grid-template-columns: repeat(3, 1fr);

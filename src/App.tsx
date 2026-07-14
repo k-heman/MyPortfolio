@@ -82,13 +82,12 @@ function Portfolio({ firebaseData }: { firebaseData: FirebaseData }) {
         activeSection={activeSection}
         theme={theme}
         toggleTheme={toggleTheme}
-        label={content.header.home.label}
       />
       <main id="main-content" ref={mainRef}>
         <Hero home={homeData} openToWork={content.global.openToWork} openToWorkText={content.global.openToWorkText} />
         <About about={aboutData} location={content.global.location} />
         <Projects projects={projectsData} />
-        <Skills skills={skillsData} />
+        <Skills skills={skillsData} theme={theme} />
         <Contact contact={content.contact} />
       </main>
       <Footer footer={content.footer} navItems={navItems} />

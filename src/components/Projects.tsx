@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useReveal } from '../hooks/useReveal';
 import type { Project, Technology } from '../types';
 
@@ -13,6 +13,7 @@ interface ProjectsData {
 export default function Projects({ projects }: { projects: ProjectsData }) {
   const { ref, visible } = useReveal();
   const [activeTag, setActiveTag] = useState<string>('All');
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   // Extract all unique technologies for the filter tabs
   const allTags = ['All', ...Array.from(new Set(projects.items.flatMap((p) => p.technologies.map(t => t.name))))];
@@ -20,6 +21,29 @@ export default function Projects({ projects }: { projects: ProjectsData }) {
   const filteredProjects = activeTag === 'All'
     ? projects.items
     : projects.items.filter((p) => p.technologies.some(t => t.name === activeTag));
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedProject]);
+
+  // Handle escape key to close modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && selectedProject) {
+        setSelectedProject(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedProject]);
 
   return (
     <section id="projects" className="section" aria-labelledby="projects-heading">
@@ -51,9 +75,28 @@ export default function Projects({ projects }: { projects: ProjectsData }) {
           ) : (
             filteredProjects.map((project, i) => (
               <article className="projects__card" key={project.id || i}>
+                {/* Visual Thumbnail */}
+                {project.imageUrl ? (
+                  <div className="projects__card-image-wrap">
+                    <img src={project.imageUrl} alt={project.title} className="projects__card-image" loading="lazy" />
+                  </div>
+                ) : (
+                  <div className="projects__card-image-wrap projects__card-image-wrap--placeholder">
+                    <span className="projects__card-image-placeholder-text">{project.title.charAt(0)}</span>
+                  </div>
+                )}
+                
                 <div className="projects__card-inner">
                   <h3 className="projects__card-title">{project.title}</h3>
-                  <p className="projects__card-desc">{project.description}</p>
+                  
+                  {/* Read More Button replaces the full paragraph */}
+                  <button 
+                    className="projects__card-read-more" 
+                    onClick={() => setSelectedProject(project)}
+                    aria-label={`Read more about ${project.title}`}
+                  >
+                    Read More
+                  </button>
                   
                   <div className="projects__card-tech">
                     {project.technologies.map((tech, j) => (
@@ -85,6 +128,68 @@ export default function Projects({ projects }: { projects: ProjectsData }) {
           )}
         </div>
       </div>
+
+      {/* Description Modal */}
+      {selectedProject && (
+        <div 
+          className="projects__modal-overlay" 
+          onClick={() => setSelectedProject(null)} 
+          role="dialog" 
+          aria-modal="true" 
+          aria-labelledby="modal-title"
+        >
+          <div 
+            className="projects__modal-content" 
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the box
+          >
+            <button 
+              className="projects__modal-close" 
+              onClick={() => setSelectedProject(null)}
+              aria-label="Close modal"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="24" height="24">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+
+            {selectedProject.imageUrl && (
+              <div className="projects__modal-image-wrap">
+                <img src={selectedProject.imageUrl} alt={selectedProject.title} className="projects__modal-image" loading="lazy" />
+              </div>
+            )}
+            
+            <div className="projects__modal-body">
+              <h3 id="modal-title" className="projects__modal-title">{selectedProject.title}</h3>
+              
+              <div className="projects__modal-tech">
+                {selectedProject.technologies.map((tech, j) => (
+                  <span className="projects__modal-tag" key={j}>{tech.name}</span>
+                ))}
+              </div>
+
+              <div className="projects__modal-desc">
+                {selectedProject.description.split('\n').map((paragraph, idx) => (
+                  <p key={idx}>{paragraph}</p>
+                ))}
+              </div>
+
+              <div className="projects__modal-links">
+                {selectedProject.liveUrl && (
+                  <a href={selectedProject.liveUrl} target="_blank" rel="noopener noreferrer" className="btn" aria-label={`View ${selectedProject.title} live`}>
+                     Live Demo
+                  </a>
+                )}
+                {selectedProject.githubUrl && (
+                  <a href={selectedProject.githubUrl} target="_blank" rel="noopener noreferrer" className="btn btn--secondary" aria-label={`View ${selectedProject.title} on GitHub`}>
+                     Source Code
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

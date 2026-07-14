@@ -35,15 +35,15 @@
 }
 
 .admin-dashboard__logo {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.5rem;
-  letter-spacing: -1px;
-  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  display: flex;
+  align-items: center;
   text-decoration: none;
+}
+
+.admin-dashboard__logo-img {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
 }
 
 .admin-dashboard__logo-label {
