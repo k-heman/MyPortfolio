@@ -129,10 +129,11 @@ export default function Hero({
           </div>
         </div>
 
-        <div className="hero__stats">
-          {stats.map((stat) => (
-            <StatCounter key={stat.label} stat={stat} />
-          ))}
+        <div className="hero__portrait-wrapper">
+          <div className="hero__portrait-glow" aria-hidden="true" />
+          <div className="hero__portrait-card">
+            <img src="/assets/myimage.jpeg" alt="Professional Portrait" className="hero__portrait-img" />
+          </div>
         </div>
       </div>
 

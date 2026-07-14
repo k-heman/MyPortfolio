@@ -74,7 +74,12 @@ export default function Projects({ projects }: { projects: ProjectsData }) {
             </p>
           ) : (
             filteredProjects.map((project, i) => (
-              <article className="projects__card" key={project.id || i}>
+              <article 
+                className="projects__card" 
+                key={project.id || i}
+                onClick={() => setSelectedProject(project)}
+                style={{ cursor: 'pointer' }}
+              >
                 {/* Visual Thumbnail */}
                 {project.imageUrl ? (
                   <div className="projects__card-image-wrap">
@@ -89,15 +94,7 @@ export default function Projects({ projects }: { projects: ProjectsData }) {
                 <div className="projects__card-inner">
                   <h3 className="projects__card-title">{project.title}</h3>
                   
-                  {/* Read More Button replaces the full paragraph */}
-                  <button 
-                    className="projects__card-read-more" 
-                    onClick={() => setSelectedProject(project)}
-                    aria-label={`Read more about ${project.title}`}
-                  >
-                    Read More
-                  </button>
-                  
+                  {/* Read More button removed; entire card triggers modal */}
                   <div className="projects__card-tech">
                     {project.technologies.map((tech, j) => (
                       <span className="projects__card-tag" key={j}>{tech.name}</span>
@@ -106,16 +103,16 @@ export default function Projects({ projects }: { projects: ProjectsData }) {
 
                   <div className="projects__card-links">
                     {project.liveUrl && (
-                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="projects__card-link" aria-label={`View ${project.title} live`}>
-                        <svg viewBox="0 0 24 24" fill="none" width="18" height="18" aria-hidden="true">
+                      <a href={project.liveUrl} onClick={(e) => e.stopPropagation()} target="_blank" rel="noopener noreferrer" className="btn btn--primary" style={{ padding: '8px 16px', fontSize: '13px' }} aria-label={`View ${project.title} live`}>
+                        <svg viewBox="0 0 24 24" fill="none" width="16" height="16" aria-hidden="true" style={{ marginRight: '6px', display: 'inline-block', verticalAlign: 'middle' }}>
                           <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                         Live Demo
                       </a>
                     )}
                     {project.githubUrl && (
-                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="projects__card-link" aria-label={`View ${project.title} on GitHub`}>
-                        <svg viewBox="0 0 24 24" fill="none" width="18" height="18" aria-hidden="true">
+                      <a href={project.githubUrl} onClick={(e) => e.stopPropagation()} target="_blank" rel="noopener noreferrer" className="btn btn--secondary" style={{ padding: '8px 16px', fontSize: '13px' }} aria-label={`View ${project.title} on GitHub`}>
+                        <svg viewBox="0 0 24 24" fill="none" width="16" height="16" aria-hidden="true" style={{ marginRight: '6px', display: 'inline-block', verticalAlign: 'middle' }}>
                           <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                         Source
@@ -176,7 +173,7 @@ export default function Projects({ projects }: { projects: ProjectsData }) {
 
               <div className="projects__modal-links">
                 {selectedProject.liveUrl && (
-                  <a href={selectedProject.liveUrl} target="_blank" rel="noopener noreferrer" className="btn" aria-label={`View ${selectedProject.title} live`}>
+                  <a href={selectedProject.liveUrl} target="_blank" rel="noopener noreferrer" className="btn btn--primary" aria-label={`View ${selectedProject.title} live`}>
                      Live Demo
                   </a>
                 )}

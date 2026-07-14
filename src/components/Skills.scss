@@ -196,7 +196,8 @@
 
   &__card-pills-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     gap: 8px;
@@ -214,8 +215,8 @@
   }
 
   &__card-pill {
-    padding: 6px 14px;
-    font-size: var(--fs-xs, 12px);
+    padding: 4px 12px;
+    font-size: 11px;
     font-weight: 500;
     color: var(--text-primary);
     background: color-mix(in oklab, var(--text-primary) 8%, transparent);
@@ -223,10 +224,6 @@
     border-radius: 9999px; /* full rounded capsule */
     white-space: nowrap;
     text-align: center;
-    width: 100%;
-    max-width: 90%;
-    text-overflow: ellipsis;
-    overflow: hidden;
   }
 
   &__card-bar {

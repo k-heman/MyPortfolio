@@ -68,7 +68,7 @@ export default function Skills({ skills, theme }: { skills: SkillsData; theme: '
   const [flippedId, setFlippedId] = useState<string | null>(null);
   useEffect(() => {
     if (skills.categories.length > 0 && !activeCategory) {
-      setActiveCategory(skills.categories[0].categoryKey);
+      setActiveCategory(skills.categories[skills.categories.length - 1].categoryKey);
     }
   }, [skills.categories, activeCategory]);
 
@@ -81,7 +81,7 @@ export default function Skills({ skills, theme }: { skills: SkillsData; theme: '
     setFlippedId((prev) => (prev === cardId ? null : cardId));
   }, []);
 
-  const filtered = skills.icons.filter((icon) => icon.category === activeCategory);
+  const filtered = skills.icons.filter((icon) => icon.category === activeCategory).reverse();
 
   return (
     <section id="skills" className="section" aria-labelledby="skills-heading">
@@ -103,7 +103,7 @@ export default function Skills({ skills, theme }: { skills: SkillsData; theme: '
       <div ref={ref} className={`skills__content ${visible ? 'reveal--visible' : 'reveal'}`}>
         {/* Category tabs */}
         <div className="skills__tabs" role="tablist">
-          {skills.categories.map((cat) => (
+          {[...skills.categories].reverse().map((cat) => (
             <button
               key={cat.categoryKey}
               role="tab"

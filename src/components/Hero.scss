@@ -56,10 +56,15 @@
     width: 100%;
     position: relative;
     z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
   }
 
   &__content {
-    max-width: 720px;
+    flex: 1;
+    max-width: 600px;
   }
 
   &__logo {
@@ -154,49 +159,57 @@
     margin-bottom: 56px;
   }
 
-  &__stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    max-width: 520px;
-    margin-top: 20px;
+  &__portrait-wrapper {
+    position: relative;
+    flex: 1;
+    max-width: 450px;
+    display: flex;
+    justify-content: flex-end;
+    animation: 
+      portrait-fade-in 700ms ease-out both,
+      portrait-float 6s ease-in-out infinite;
+    animation-delay: 0s, 700ms; /* float starts after fade-in */
   }
 
-  &__stat {
-    text-align: center;
-    padding: 20px 16px;
-    background: color-mix(in oklab, var(--bg-secondary) 80%, transparent);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    backdrop-filter: blur(10px);
-    transition: transform 0.3s var(--ease-standard), border-color 0.3s;
+  &__portrait-glow {
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, color-mix(in oklab, var(--accent-primary, #6366f1) 25%, transparent), transparent 70%);
+    filter: blur(40px);
+    z-index: 0;
+  }
+
+  &__portrait-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 300ms ease;
 
     &:hover {
-      transform: translateY(-4px);
-      border-color: color-mix(in oklab, var(--accent-primary) 40%, transparent);
+      transform: scale(1.02);
     }
   }
 
-  &__stat-value {
-    display: block;
-    font-family: var(--font-display);
-    font-size: clamp(1.75rem, 3vw, 2.5rem);
-    font-weight: 800;
-    letter-spacing: -1px;
-    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  &__stat-label {
-    display: block;
-    font-size: var(--fs-2xs);
-    color: var(--text-muted);
-    margin-top: 4px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  &__portrait-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center; /* keeps face/chest visible */
+    border-radius: 20px;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
   }
 
   &__scroll-cue {
@@ -259,6 +272,48 @@
   }
 }
 
+@keyframes portrait-fade-in {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes portrait-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@media (max-width: 992px) {
+  .hero {
+    &__inner {
+      flex-direction: column;
+      text-align: center;
+      gap: 50px;
+    }
+
+    &__content {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__ctas {
+      justify-content: center;
+    }
+
+    &__portrait-wrapper {
+      justify-content: center;
+      width: 100%;
+      max-width: 400px;
+    }
+  }
+}
+
 @media (max-width: 640px) {
   .hero {
     padding: 100px 20px 60px;
@@ -268,21 +323,11 @@
       height: 64px;
     }
 
-    &__stats {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
     &__ctas {
       flex-direction: column;
+      width: 100%;
 
       .btn { width: 100%; }
     }
-  }
-}
-
-@media (max-width: 400px) {
-  .hero__stats {
-    grid-template-columns: 1fr;
   }
 }
