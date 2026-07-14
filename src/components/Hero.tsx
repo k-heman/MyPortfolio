@@ -132,7 +132,7 @@ export default function Hero({
         <div className="hero__portrait-wrapper">
           <div className="hero__portrait-glow" aria-hidden="true" />
           <div className="hero__portrait-card">
-            <img src="/assets/myimage.jpeg" alt="Professional Portrait" className="hero__portrait-img" />
+            <img src="/assets/myimage.png" alt="Professional Portrait" className="hero__portrait-img" />
           </div>
         </div>
       </div>
