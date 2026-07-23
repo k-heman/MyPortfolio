@@ -17,6 +17,10 @@
         "label": "Projects"
       },
       {
+        "href": "/certificates",
+        "label": "Certificates"
+      },
+      {
         "href": "/skills",
         "label": "Skills"
       },

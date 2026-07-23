@@ -1,0 +1,780 @@
+/* =============================================================
+   Certificates Manager Admin Section Styling
+   BEM Naming convention & portfolio theme variables
+   ============================================================= */
+
+.certificates-manager {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+/* ---- Toast notification ---- */
+.certificates-manager__toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-medium);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: all var(--dur-fast) var(--ease-standard);
+  z-index: 1000;
+
+  &--show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  &--success {
+    border-color: rgba(34, 197, 94, 0.4);
+    background: color-mix(in oklab, var(--bg-secondary) 90%, #22c55e);
+
+    svg {
+      color: #22c55e;
+    }
+  }
+
+  &--error {
+    border-color: rgba(239, 68, 68, 0.4);
+    background: color-mix(in oklab, var(--bg-secondary) 90%, #ef4444);
+
+    svg {
+      color: #ef4444;
+    }
+  }
+}
+
+/* ---- Header Bar ---- */
+.certificates-manager__header-bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.certificates-manager__title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.certificates-manager__page-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-bold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.certificates-manager__page-sub {
+  font-size: var(--fs-body-sm);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.certificates-manager__add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--accent-primary);
+  color: #ffffff;
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-semibold);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-standard);
+  box-shadow: 0 4px 14px color-mix(in oklab, var(--accent-primary) 35%, transparent);
+
+  &:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.1);
+    box-shadow: 0 6px 20px color-mix(in oklab, var(--accent-primary) 50%, transparent);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+/* ---- Controls Bar: Search, Filter, Sort ---- */
+.certificates-manager__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 16px 20px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+}
+
+.certificates-manager__search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 240px;
+}
+
+.certificates-manager__search-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.certificates-manager__search-input {
+  width: 100%;
+  padding: 10px 36px 10px 42px;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-body-sm);
+  transition: all var(--dur-fast) var(--ease-standard);
+
+  &::placeholder {
+    color: var(--text-muted);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent-primary) 20%, transparent);
+  }
+}
+
+.certificates-manager__clear-search {
+  position: absolute;
+  right: 10px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--radius-pill);
+
+  &:hover {
+    color: var(--text-primary);
+    background: color-mix(in oklab, var(--text-primary) 10%, transparent);
+  }
+}
+
+.certificates-manager__dropdowns {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.certificates-manager__select-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.certificates-manager__select-label {
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-semibold);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.certificates-manager__select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.certificates-manager__select {
+  appearance: none;
+  padding: 8px 32px 8px 12px;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-standard);
+
+  &:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent-primary) 20%, transparent);
+  }
+
+  option {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+  }
+}
+
+.certificates-manager__select-arrow {
+  position: absolute;
+  right: 10px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+/* ---- Desktop Table View ---- */
+.certificates-manager__table-container {
+  width: 100%;
+  overflow-x: auto;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.certificates-manager__table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: var(--fs-body-sm);
+
+  th {
+    padding: 16px 20px;
+    font-size: var(--fs-2xs);
+    font-weight: var(--fw-bold);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border-color);
+    background: color-mix(in oklab, var(--bg-tertiary) 50%, transparent);
+  }
+
+  td {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
+    vertical-align: middle;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr:hover td {
+    background: color-mix(in oklab, var(--accent-primary) 4%, transparent);
+  }
+}
+
+.certificates-manager__thumbnail-wrapper {
+  width: 60px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.certificates-manager__thumbnail-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.certificates-manager__thumbnail-placeholder {
+  color: var(--text-muted);
+}
+
+.certificates-manager__cert-title {
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+/* Status Badge */
+.certificates-manager__status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  &--published {
+    background: color-mix(in oklab, #22c55e 12%, transparent);
+    color: #4ade80;
+    border: 1px solid color-mix(in oklab, #22c55e 30%, transparent);
+
+    .certificates-manager__status-dot {
+      background: #4ade80;
+    }
+  }
+
+  &--draft {
+    background: color-mix(in oklab, #f59e0b 12%, transparent);
+    color: #fbbf24;
+    border: 1px solid color-mix(in oklab, #f59e0b 30%, transparent);
+
+    .certificates-manager__status-dot {
+      background: #fbbf24;
+    }
+  }
+}
+
+.certificates-manager__status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.certificates-manager__order-tag {
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-medium);
+  color: var(--text-muted);
+}
+
+/* Action Buttons */
+.certificates-manager__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.certificates-manager__action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-semibold);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-standard);
+
+  &--edit {
+    background: color-mix(in oklab, var(--accent-primary) 12%, transparent);
+    color: var(--text-primary);
+    border-color: color-mix(in oklab, var(--accent-primary) 30%, transparent);
+
+    &:hover {
+      background: color-mix(in oklab, var(--accent-primary) 25%, transparent);
+      border-color: var(--accent-primary);
+    }
+  }
+
+  &--delete {
+    background: color-mix(in oklab, #ef4444 12%, transparent);
+    color: #fca5a5;
+    border-color: color-mix(in oklab, #ef4444 30%, transparent);
+
+    &:hover {
+      background: color-mix(in oklab, #ef4444 25%, transparent);
+      border-color: #ef4444;
+      color: #ffffff;
+    }
+  }
+}
+
+/* ---- Mobile Responsive Grid View ---- */
+.certificates-manager__mobile-grid {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
+}
+
+.certificates-manager__mobile-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+}
+
+.certificates-manager__mobile-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.certificates-manager__mobile-card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  flex: 1;
+}
+
+.certificates-manager__mobile-card-title {
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.certificates-manager__mobile-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+/* ---- Empty State ---- */
+.certificates-manager__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 24px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+}
+
+.certificates-manager__empty-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--accent-primary) 10%, transparent);
+  color: var(--accent-primary);
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+}
+
+.certificates-manager__empty-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-bold);
+  color: var(--text-primary);
+  margin: 0 0 8px;
+}
+
+.certificates-manager__empty-text {
+  font-size: var(--fs-body-sm);
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 400px;
+}
+
+/* ---- Modal & Overlays ---- */
+.certificates-manager__modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  z-index: 1100;
+  animation: modalFadeIn 0.2s var(--ease-standard);
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.certificates-manager__modal {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  animation: modalSlideUp 0.25s var(--ease-standard);
+
+  &--delete {
+    max-width: 440px;
+  }
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.certificates-manager__modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color);
+  background: color-mix(in oklab, var(--bg-tertiary) 40%, transparent);
+}
+
+.certificates-manager__modal-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-bold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.certificates-manager__modal-close {
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: var(--radius-md);
+
+  &:hover {
+    color: var(--text-primary);
+    background: color-mix(in oklab, var(--text-primary) 10%, transparent);
+  }
+}
+
+.certificates-manager__modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 24px;
+}
+
+.certificates-manager__form-error {
+  padding: 10px 14px;
+  background: color-mix(in oklab, #ef4444 15%, transparent);
+  border: 1px solid color-mix(in oklab, #ef4444 40%, transparent);
+  color: #fca5a5;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-body-sm);
+}
+
+.certificates-manager__form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-size: var(--fs-body-sm);
+    font-weight: var(--fw-semibold);
+    color: var(--text-primary);
+  }
+}
+
+.certificates-manager__required {
+  color: #ef4444;
+}
+
+.certificates-manager__input {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-body-sm);
+
+  &:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent-primary) 20%, transparent);
+  }
+}
+
+.certificates-manager__file-input {
+  font-size: var(--fs-body-sm);
+  color: var(--text-secondary);
+
+  &::file-selector-button {
+    padding: 8px 14px;
+    margin-right: 12px;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-weight: var(--fw-medium);
+    cursor: pointer;
+    transition: all var(--dur-fast) var(--ease-standard);
+
+    &:hover {
+      background: color-mix(in oklab, var(--accent-primary) 15%, transparent);
+      border-color: var(--accent-primary);
+    }
+  }
+}
+
+.certificates-manager__field-hint {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+}
+
+.certificates-manager__image-preview-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.certificates-manager__preview-label {
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-semibold);
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.certificates-manager__image-preview {
+  max-width: 100%;
+  max-height: 160px;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
+}
+
+.certificates-manager__form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.certificates-manager__modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 12px;
+}
+
+.certificates-manager__btn {
+  padding: 10px 20px;
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-semibold);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-standard);
+  border: 1px solid transparent;
+
+  &--cancel {
+    background: transparent;
+    color: var(--text-secondary);
+    border-color: var(--border-color);
+
+    &:hover {
+      background: color-mix(in oklab, var(--text-primary) 8%, transparent);
+      color: var(--text-primary);
+    }
+  }
+
+  &--save {
+    background: var(--accent-primary);
+    color: #ffffff;
+
+    &:hover {
+      filter: brightness(1.1);
+    }
+  }
+
+  &--danger {
+    background: #ef4444;
+    color: #ffffff;
+
+    &:hover {
+      background: #dc2626;
+    }
+  }
+}
+
+.certificates-manager__delete-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.certificates-manager__delete-message {
+  font-size: var(--fs-body-sm);
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.certificates-manager__delete-note {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ---- Loading State & Spinners ---- */
+.certificates-manager__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px 24px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  color: var(--text-secondary);
+  font-size: var(--fs-body-sm);
+}
+
+.certificates-manager__spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid color-mix(in oklab, currentColor 30%, transparent);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: certSpinner 0.6s linear infinite;
+  display: inline-block;
+}
+
+@keyframes certSpinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+

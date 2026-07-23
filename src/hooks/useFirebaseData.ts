@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import type { Project, Skill, SkillCategory, SiteContent } from '../types';
+import type { Project, Skill, SkillCategory, SiteContent, Certificate } from '../types';
 
 export interface FirebaseData {
   settings: SiteContent | null;
   projects: Project[];
   categories: SkillCategory[];
   skills: Skill[];
+  certificates: Certificate[];
 }
 
 export function useFirebaseData() {
@@ -15,7 +16,8 @@ export function useFirebaseData() {
     settings: null,
     projects: [],
     categories: [],
-    skills: []
+    skills: [],
+    certificates: [],
   });
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
@@ -32,33 +34,39 @@ export function useFirebaseData() {
           setProgress(10);
         }
         const settingsDoc = await getDoc(doc(db, 'settings', 'global'));
-        const settingsData = settingsDoc.exists() ? settingsDoc.data() as SiteContent : null;
+        const settingsData = settingsDoc.exists() ? (settingsDoc.data() as SiteContent) : null;
 
         // Step 2: Projects
         if (!cancelled) {
           setStatusText('Fetching project clusters...');
-          setProgress(40);
+          setProgress(35);
         }
         const projectsSnap = await getDocs(collection(db, 'projects'));
-        
-        // Ensure the ID is attached
-        const projectsData = projectsSnap.docs.map(d => ({ id: d.id, ...d.data() })) as Project[];
+        const projectsData = projectsSnap.docs.map((d) => ({ id: d.id, ...d.data() })) as Project[];
 
         // Step 3: Categories
         if (!cancelled) {
           setStatusText('Resolving category schemas...');
-          setProgress(70);
+          setProgress(55);
         }
         const categoriesSnap = await getDocs(collection(db, 'categories'));
-        const categoriesData = categoriesSnap.docs.map(d => ({ id: d.id, ...d.data() })) as SkillCategory[];
+        const categoriesData = categoriesSnap.docs.map((d) => ({ id: d.id, ...d.data() })) as SkillCategory[];
 
         // Step 4: Skills
         if (!cancelled) {
           setStatusText('Mounting skill nodes...');
-          setProgress(90);
+          setProgress(75);
         }
         const skillsSnap = await getDocs(collection(db, 'skills'));
-        const skillsData = skillsSnap.docs.map(d => ({ id: d.id, ...d.data() })) as Skill[];
+        const skillsData = skillsSnap.docs.map((d) => ({ id: d.id, ...d.data() })) as Skill[];
+
+        // Step 5: Certificates
+        if (!cancelled) {
+          setStatusText('Loading credentials & certificates...');
+          setProgress(90);
+        }
+        const certificatesSnap = await getDocs(collection(db, 'certificates'));
+        const certificatesData = certificatesSnap.docs.map((d) => ({ id: d.id, ...d.data() })) as Certificate[];
 
         if (!cancelled) {
           setData({
@@ -66,8 +74,10 @@ export function useFirebaseData() {
             projects: projectsData,
             categories: categoriesData,
             skills: skillsData,
+            certificates: certificatesData,
           });
           setStatusText('Boot sequence complete. Launching UI...');
+          setProgress(100);
           setProgress(100);
           
           // Add a slight delay to let user see 100%

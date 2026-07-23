@@ -5,13 +5,15 @@ import { collection, addDoc, getDocs, doc, setDoc, getDoc, query, orderBy, delet
 import { Icon } from '@iconify/react';
 
 import { auth, db } from '../config/firebase';
+import CertificatesManager from './CertificatesManager';
+import contentData from '../../content/content.json';
+
 import type { User } from 'firebase/auth';
 import type { Project, Skill, Technology, ContactMessage, SiteContent, SkillCategory, AboutHighlight } from '../types';
-import contentData from '../../content/content.json';
 
 import './AdminDashboard.scss';
 
-type ActiveTab = 'dashboard' | 'projects' | 'skills' | 'messages' | 'settings' | 'categories';
+type ActiveTab = 'dashboard' | 'projects' | 'skills' | 'messages' | 'settings' | 'categories' | 'certificates';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -543,6 +545,17 @@ export default function AdminDashboard() {
           </button>
           <button 
             type="button"
+            className={`admin-dashboard__nav-item ${activeTab === 'certificates' ? 'admin-dashboard__nav-item--active' : ''}`}
+            onClick={() => setActiveTab('certificates')}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="8" r="7" />
+              <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+            </svg>
+            Certificates
+          </button>
+          <button 
+            type="button"
             className={`admin-dashboard__nav-item ${activeTab === 'messages' ? 'admin-dashboard__nav-item--active' : ''}`}
             onClick={() => setActiveTab('messages')}
           >
@@ -592,6 +605,7 @@ export default function AdminDashboard() {
               {activeTab === 'projects' && 'Manage Projects'}
               {activeTab === 'skills' && 'Manage Skills'}
               {activeTab === 'categories' && 'Manage Categories'}
+              {activeTab === 'certificates' && 'Certificates'}
               {activeTab === 'messages' && 'Messages'}
               {activeTab === 'settings' && 'Site Settings'}
             </h1>
@@ -600,6 +614,7 @@ export default function AdminDashboard() {
               {activeTab === 'projects' && "Edit, delete or create project entries in Firestore"}
               {activeTab === 'skills' && "Edit, delete or create skill entries in Firestore"}
               {activeTab === 'categories' && "Manage skill categories"}
+              {activeTab === 'certificates' && "Manage your professional certifications and credentials"}
               {activeTab === 'messages' && "Read and delete messages submitted through the contact form"}
               {activeTab === 'settings' && "Manage dynamic global content and highlight cards"}
             </p>
@@ -716,6 +731,8 @@ export default function AdminDashboard() {
               )}
             </div>
           )}
+
+          {activeTab === 'certificates' && <CertificatesManager />}
 
           {activeTab === 'messages' && (
             <div className="admin-dashboard__messages">

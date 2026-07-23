@@ -95,4 +95,19 @@ export interface SiteContent {
   aboutHighlights?: AboutHighlight[];
 }
 
+/**
+ * Certificate item for Admin Panel management UI.
+ */
+export interface Certificate {
+  id?: string;
+  title: string;
+  imageUrl: string;
+  displayOrder: number;
+  status: 'Published' | 'Draft' | 'published' | 'draft';
+  createdAt?: string | number | any;
+  updatedAt?: string | number | any;
+}
+
+
+
 
