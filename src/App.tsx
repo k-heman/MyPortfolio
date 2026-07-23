@@ -63,6 +63,9 @@ function Portfolio({ firebaseData }: { firebaseData: FirebaseData }) {
   if (firebaseData.settings?.heroSubtitle) homeData.titles = firebaseData.settings.heroSubtitle.split(',').map(s => s.trim());
   if (firebaseData.settings?.heroDescription) homeData.tagline = firebaseData.settings.heroDescription;
 
+  const heroBadgeText = firebaseData.settings?.heroBadge?.text ?? content.global.openToWorkText;
+  const heroBadgeEnabled = firebaseData.settings?.heroBadge?.enabled ?? content.global.openToWork;
+
   const aboutData = { ...content.about };
   if (firebaseData.settings?.aboutHeading) aboutData.title = firebaseData.settings.aboutHeading;
   if (firebaseData.settings?.aboutDescription) aboutData.description = firebaseData.settings.aboutDescription;
@@ -85,7 +88,7 @@ function Portfolio({ firebaseData }: { firebaseData: FirebaseData }) {
         toggleTheme={toggleTheme}
       />
       <main id="main-content" ref={mainRef}>
-        <Hero home={homeData} openToWork={content.global.openToWork} openToWorkText={content.global.openToWorkText} />
+        <Hero home={homeData} openToWork={heroBadgeEnabled} openToWorkText={heroBadgeText} />
         <About about={aboutData} location={content.global.location} />
         <Projects projects={projectsData} />
         <Certificates certificates={firebaseData.certificates} />

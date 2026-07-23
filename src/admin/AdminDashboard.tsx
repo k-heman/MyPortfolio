@@ -50,7 +50,11 @@ export default function AdminDashboard() {
     heroDescription: contentData.home.tagline,
     aboutHeading: contentData.about.title,
     aboutDescription: contentData.about.description,
-    aboutHighlights: contentData.about.highlights.map(h => ({ icon: h.icon, title: h.title, sub: h.sub }))
+    aboutHighlights: contentData.about.highlights.map(h => ({ icon: h.icon, title: h.title, sub: h.sub })),
+    heroBadge: {
+      text: contentData.global.openToWorkText || "🚀 Building Real-World Software • Open to Freelance Projects • AI Enthusiast",
+      enabled: contentData.global.openToWork ?? true,
+    }
   });
 
   // Project form state
@@ -183,8 +187,9 @@ export default function AdminDashboard() {
             setSettings({
               ...settings,
               ...data,
-              // Backup defaults if highlights didn't exist in document yet
-              aboutHighlights: data.aboutHighlights || settings.aboutHighlights
+              // Backup defaults if highlights/heroBadge didn't exist in document yet
+              aboutHighlights: data.aboutHighlights || settings.aboutHighlights,
+              heroBadge: data.heroBadge || settings.heroBadge,
             });
           } else {
             await setDoc(docRef, settings, { merge: true });
@@ -806,6 +811,47 @@ export default function AdminDashboard() {
                     value={settings.heroDescription}
                     onChange={(e) => setSettings({ ...settings, heroDescription: e.target.value })}
                   />
+                </div>
+
+                <h3 className="admin-dashboard__form-section-title">Hero Badge</h3>
+                <div className="admin-dashboard__form-group">
+                  <label htmlFor="heroBadgeText">Hero Badge Text</label>
+                  <textarea
+                    id="heroBadgeText"
+                    rows={3}
+                    required
+                    value={settings.heroBadge?.text ?? ''}
+                    onChange={(e) =>
+                      setSettings({
+                        ...settings,
+                        heroBadge: {
+                          text: e.target.value,
+                          enabled: settings.heroBadge?.enabled ?? true,
+                        },
+                      })
+                    }
+                    placeholder="🚀 Building Real-World Software • Open to Freelance Projects • AI Enthusiast"
+                  />
+                </div>
+                <div className="admin-dashboard__form-group">
+                  <label htmlFor="heroBadgeEnabled" style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
+                    <input
+                      id="heroBadgeEnabled"
+                      type="checkbox"
+                      checked={settings.heroBadge?.enabled ?? true}
+                      onChange={(e) =>
+                        setSettings({
+                          ...settings,
+                          heroBadge: {
+                            text: settings.heroBadge?.text ?? '',
+                            enabled: e.target.checked,
+                          },
+                        })
+                      }
+                      style={{ width: '18px', height: '18px', accentColor: 'var(--accent-primary)', cursor: 'pointer' }}
+                    />
+                    <span>Enable Badge (Display pill-shaped badge in Hero section)</span>
+                  </label>
                 </div>
                 
                 <h3 className="admin-dashboard__form-section-title">About Section</h3>

@@ -83,6 +83,11 @@ export interface AboutHighlight {
   sub: string;
 }
 
+export interface HeroBadge {
+  text: string;
+  enabled: boolean;
+}
+
 /**
  * Global site content stored in Firestore's `settings/global` document.
  */
@@ -93,6 +98,7 @@ export interface SiteContent {
   aboutHeading: string;
   aboutDescription: string;
   aboutHighlights?: AboutHighlight[];
+  heroBadge?: HeroBadge;
 }
 
 /**
