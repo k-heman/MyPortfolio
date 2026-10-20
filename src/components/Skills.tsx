@@ -116,6 +116,12 @@ export default function Skills({ skills, theme }: { skills: SkillsData; theme: '
           ))}
         </div>
 
+        {/* Hint for users to click skill cards */}
+        <p className="skills__hint" aria-label="Click any skill card for details">
+          <Icon icon="mdi:gesture-tap" aria-hidden="true" />
+          <span>Tap any skill to see what I know</span>
+        </p>
+
         {/* Skill cards grid */}
         <div className="skills__grid" role="tabpanel">
           {filtered.length === 0 ? (

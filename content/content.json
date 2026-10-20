@@ -457,8 +457,8 @@
         {
           "name": "Instagram",
           "class": "mdi:instagram",
-          "value": "its_me_sny._",
-          "link": "https://www.instagram.com/its_me_sny._/"
+          "value": "heman.builds",
+          "link": "https://www.instagram.com/heman.builds/"
         }
       ]
     },
@@ -507,7 +507,7 @@
       },
       {
         "name": "Instagram",
-        "url": "https://www.instagram.com/its_me_sny._/",
+        "url": "https://www.instagram.com/heman.builds/",
         "class": "fa6-brands:instagram"
       }
     ],
